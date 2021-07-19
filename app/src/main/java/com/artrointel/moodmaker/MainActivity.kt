@@ -4,14 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 class MainActivity : AppCompatActivity() {
-    lateinit var moodMaker: MoodMaker
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

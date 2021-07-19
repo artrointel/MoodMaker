@@ -1,10 +1,9 @@
-package com.artrointel.moodmaker.renderengine.gl
+package com.artrointel.moodmaker.kotesrenderengine.gl
 
-import com.artrointel.moodmaker.renderengine.utils.Debugger
+import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 import android.opengl.GLES20
 import android.opengl.GLES30
 import java.nio.IntBuffer
-
 
 class Shader(_type: TYPE, _shaderString: String) : IGLObject {
     enum class TYPE {

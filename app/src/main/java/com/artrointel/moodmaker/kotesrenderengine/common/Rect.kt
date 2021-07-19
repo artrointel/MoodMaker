@@ -1,5 +1,6 @@
-package com.artrointel.moodmaker.renderengine.common
+package com.artrointel.moodmaker.kotesrenderengine.common
 
+// todo remove this and use matrix instead
 class Rect {
     var x: Float = 0f
     var y: Float = 0f

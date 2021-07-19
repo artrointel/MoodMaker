@@ -1,9 +1,8 @@
 package com.artrointel.moodmaker.glsurfaceview
 
-import android.opengl.GLES30
 import android.opengl.GLSurfaceView
 import android.util.Log
-import com.artrointel.moodmaker.renderengine.RenderWorldBase
+import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 

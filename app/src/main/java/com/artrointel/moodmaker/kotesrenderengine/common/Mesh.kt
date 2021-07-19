@@ -1,4 +1,4 @@
-package com.artrointel.moodmaker.renderengine
+package com.artrointel.moodmaker.kotesrenderengine.common
 
 import android.opengl.GLES30
 
@@ -9,6 +9,13 @@ class Mesh(_vertices: FloatArray, _dimension: Int, _order: Int) {
             -1.0f, -1.0f,
             -1.0f, 1.0f,
             1.0f, -1.0f,
+            1.0f, 1.0f
+        ), 2, GLES30.GL_TRIANGLE_STRIP)
+
+        val QUAD_2D_NORM = Mesh(floatArrayOf(
+            0.0f, 0.0f,
+            0.0f, 1.0f,
+            1.0f, 0.0f,
             1.0f, 1.0f
         ), 2, GLES30.GL_TRIANGLE_STRIP)
 

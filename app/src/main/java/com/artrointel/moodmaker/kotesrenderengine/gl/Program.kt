@@ -1,7 +1,7 @@
-package com.artrointel.moodmaker.renderengine.gl
+package com.artrointel.moodmaker.kotesrenderengine.gl
 
 import android.opengl.GLES30
-import com.artrointel.moodmaker.renderengine.utils.Debugger
+import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 import java.nio.IntBuffer
 
 class Program(vsh: Shader, fsh: Shader) : IGLObject  {

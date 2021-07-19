@@ -1,9 +1,9 @@
-package com.artrointel.moodmaker.renderengine.gl
+package com.artrointel.moodmaker.kotesrenderengine.gl
 
 import android.opengl.GLES30
-import com.artrointel.moodmaker.renderengine.gl.utils.DataType
-import com.artrointel.moodmaker.renderengine.gl.utils.GLBuffer
-import com.artrointel.moodmaker.renderengine.utils.Debugger
+import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
+import com.artrointel.moodmaker.kotesrenderengine.gl.utils.GLBuffer
+import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 
 class Uniform(_program: Program, uniformType: DataType, uniformName: String, dataCount: Int = 1 )
     : IGLObject {

@@ -1,7 +1,7 @@
-package com.artrointel.moodmaker.renderengine
+package com.artrointel.moodmaker.kotesrenderengine
 
-import com.artrointel.moodmaker.renderengine.common.Rect
-import com.artrointel.moodmaker.renderengine.renderers.RendererBase
+import com.artrointel.moodmaker.kotesrenderengine.common.Rect
+import com.artrointel.moodmaker.kotesrenderengine.renderers.RendererBase
 
 open class Node2D {
     private var geometry: Rect = Rect() // todo use transform matrix
@@ -13,6 +13,7 @@ open class Node2D {
     fun getParent(): Node2D? {
         return parent
     }
+
     fun appendChild(node: Node2D) {
         children.add(node)
     }

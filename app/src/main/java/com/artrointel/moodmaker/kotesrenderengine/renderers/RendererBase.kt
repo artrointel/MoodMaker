@@ -1,8 +1,6 @@
-package com.artrointel.moodmaker.renderengine.renderers
+package com.artrointel.moodmaker.kotesrenderengine.renderers
 
-import android.opengl.GLES30
-import com.artrointel.moodmaker.renderengine.gl.IGLObject
-import java.util.*
+import com.artrointel.moodmaker.kotesrenderengine.gl.IGLObject
 import kotlin.collections.ArrayList
 
 abstract class RendererBase() {

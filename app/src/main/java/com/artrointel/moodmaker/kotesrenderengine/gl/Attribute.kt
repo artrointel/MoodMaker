@@ -1,9 +1,8 @@
-package com.artrointel.moodmaker.renderengine.gl
+package com.artrointel.moodmaker.kotesrenderengine.gl
 
 import android.opengl.GLES30
-import com.artrointel.moodmaker.renderengine.gl.utils.DataType
-import com.artrointel.moodmaker.renderengine.gl.utils.GLBuffer
-import com.artrointel.moodmaker.renderengine.utils.Debugger
+import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
+import com.artrointel.moodmaker.kotesrenderengine.gl.utils.GLBuffer
 import java.nio.IntBuffer
 
 class Attribute(_program: Program, _type: DataType, attributeName: String) : IGLObject {

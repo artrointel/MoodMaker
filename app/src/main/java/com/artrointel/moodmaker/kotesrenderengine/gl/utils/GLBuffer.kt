@@ -1,6 +1,5 @@
-package com.artrointel.moodmaker.renderengine.gl.utils
+package com.artrointel.moodmaker.kotesrenderengine.gl.utils
 
-import android.opengl.GLES30
 import java.nio.Buffer
 import java.nio.FloatBuffer
 import java.nio.IntBuffer

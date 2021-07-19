@@ -1,4 +1,4 @@
-package com.artrointel.moodmaker.renderengine.utils
+package com.artrointel.moodmaker.kotesrenderengine.utils
 
 import android.content.res.AssetManager
 import java.io.BufferedReader

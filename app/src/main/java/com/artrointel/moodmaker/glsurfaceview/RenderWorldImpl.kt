@@ -1,8 +1,7 @@
 package com.artrointel.moodmaker.glsurfaceview
 
 import android.content.Context
-import android.view.WindowManager
-import com.artrointel.moodmaker.renderengine.RenderWorldBase
+import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
 
 // TODO Make IRenderEngine and communicate with platform codes from Impl
 

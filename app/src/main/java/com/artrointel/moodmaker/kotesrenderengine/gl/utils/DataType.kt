@@ -1,7 +1,7 @@
-package com.artrointel.moodmaker.renderengine.gl.utils
+package com.artrointel.moodmaker.kotesrenderengine.gl.utils
 
 import android.opengl.GLES30
-import com.artrointel.moodmaker.renderengine.utils.Debugger
+import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 
 enum class DataType(val dataLength: Int, val glConstantType: Int) {
     INT(1, GLES30.GL_INT),

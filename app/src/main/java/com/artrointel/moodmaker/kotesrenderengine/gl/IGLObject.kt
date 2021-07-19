@@ -1,4 +1,4 @@
-package com.artrointel.moodmaker.renderengine.gl
+package com.artrointel.moodmaker.kotesrenderengine.gl
 
 interface IGLObject {
 

@@ -1,11 +1,10 @@
-package com.artrointel.moodmaker.renderengine.renderers
+package com.artrointel.moodmaker.kotesrenderengine.renderers
 
 import android.opengl.GLES30
-import com.artrointel.moodmaker.renderengine.Mesh
-import com.artrointel.moodmaker.renderengine.gl.*
-import com.artrointel.moodmaker.renderengine.gl.utils.DataType
-import com.artrointel.moodmaker.renderengine.gl.utils.GLBuffer
-import com.artrointel.moodmaker.renderengine.utils.Assets
+import com.artrointel.moodmaker.kotesrenderengine.common.Mesh
+import com.artrointel.moodmaker.kotesrenderengine.gl.*
+import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
+import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 
 class RectRenderer : RendererBase() {
     private var program: Program

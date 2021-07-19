@@ -1,14 +1,10 @@
 package com.artrointel.moodmaker
 
-import com.artrointel.moodmaker.renderengine.RectNode2D
-import com.artrointel.moodmaker.renderengine.RenderWorldBase
+import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
 
 // controller of the world
 class MoodMaker {
-
-    private constructor() {
-
-    }
+    private constructor()
 
     lateinit var world: RenderWorldBase
 
@@ -22,11 +18,5 @@ class MoodMaker {
                 return instance
             }
         }
-    }
-
-    fun test() {
-        var root = world.getRoot()
-        root.appendChild(RectNode2D())
-        world.invalidate()
     }
 }

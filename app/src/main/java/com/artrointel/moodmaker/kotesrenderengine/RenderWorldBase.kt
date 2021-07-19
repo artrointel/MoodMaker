@@ -1,9 +1,8 @@
-package com.artrointel.moodmaker.renderengine
+package com.artrointel.moodmaker.kotesrenderengine
 import android.content.Context
-import android.opengl.GLES10
 import android.opengl.GLES30
-import android.util.Log
-import com.artrointel.moodmaker.renderengine.utils.Assets
+import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
+import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 
 abstract class RenderWorldBase(_context: Context) {
     private var context: Context = _context
@@ -21,19 +20,18 @@ abstract class RenderWorldBase(_context: Context) {
 
     open fun render() {
         // todo bind default framebuffer
+
         if(sizeUpdated) {
-            //GLES30.glViewport(0, 0, width, height)
+            GLES30.glViewport(0, 0, width, height)
             sizeUpdated = false
         }
 
-        // todo dfs-rendering
         rootNode.render()
 
         var err = GLES30.glGetError()
         while(err != GLES30.GL_NO_ERROR) {
-            Log.e("World", "GL Error: " + err)
+            Debugger.log("World", "GLError:$err")
         }
-
     }
 
     fun updateSize(_width: Int, _height: Int) {
