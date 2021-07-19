@@ -26,6 +26,8 @@ class MoodMaker {
     }
 
     fun runTestWorld() {
-        world!!.getRoot().appendChild(RectNode2D())
+        var debugNode = RectNode2D()
+        debugNode.transform.rotate(45.0f)
+        world!!.getRoot().appendChild(debugNode)
     }
 }

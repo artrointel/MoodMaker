@@ -18,7 +18,6 @@ internal class GLBuffer {
                 FloatBuffer.allocate(data.size).put(data as FloatArray)
         }
         dataBuffer!!.rewind() // ready to read
-        Debugger.assertIf(dataBuffer == null, "Cannot created buffer!")
         return this
     }
 

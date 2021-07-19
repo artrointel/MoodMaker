@@ -1,7 +1,7 @@
 package com.artrointel.moodmaker.kotesrenderengine.renderers
 
 import android.opengl.GLES30
-import android.renderscript.Matrix3f
+import com.artrointel.moodmaker.kotesrenderengine.common.Matrix3
 import com.artrointel.moodmaker.kotesrenderengine.common.Mesh
 import com.artrointel.moodmaker.kotesrenderengine.gl.*
 import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
@@ -10,7 +10,7 @@ import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 class RectRenderer : RendererBase() {
     private var program: Program
     // Uniforms
-    var uModelMatrix: Uniform
+    private var uModelMatrix: Uniform
 
     // Attributes
     private var attrSet: AttributeSet = AttributeSet()
@@ -26,13 +26,17 @@ class RectRenderer : RendererBase() {
             Assets.getShaderString("base2D.fsh.glsl"))
 
         program = Program(vShader, fShader)
-        uModelMatrix = Uniform(program, DataType.MAT3, "modelMatrix").set(Matrix3f().array)
+        uModelMatrix = Uniform(program, DataType.MAT3, "modelMatrix").set(Matrix3.IDENTITY.raw())
         aPos = Attribute(program, DataType.VEC3, "aPos").set(Mesh.QUAD_3D.data)
         aColor = Attribute(program, DataType.VEC3, "aColor").set(Mesh.QUAD_3D.data)
 
         attrSet.set(aPos, aColor)
 
         attachGlObjects(program, uModelMatrix, attrSet)
+    }
+
+    internal fun setTransformMatrix(xForm: Matrix3) {
+        uModelMatrix.set(xForm.raw())
     }
 
     override fun onPrepare() {

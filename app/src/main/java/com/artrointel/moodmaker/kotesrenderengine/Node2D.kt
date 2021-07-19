@@ -4,7 +4,6 @@ import android.renderscript.Matrix3f
 import com.artrointel.moodmaker.kotesrenderengine.renderers.RendererBase
 
 open class Node2D {
-    var transFormMatrix = Matrix3f()
 
     private var renderers: ArrayList<RendererBase> = ArrayList()
 
@@ -32,7 +31,7 @@ open class Node2D {
     }
 
     // render dfs
-    internal fun render() {
+    internal open fun render() {
         for(child in children) {
             child.render()
         }
