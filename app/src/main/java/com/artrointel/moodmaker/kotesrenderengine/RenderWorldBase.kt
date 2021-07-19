@@ -18,8 +18,13 @@ abstract class RenderWorldBase(_context: Context) {
 
     abstract fun invalidate()
 
+    open fun initialize() {
+        GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
+    }
+
     open fun render() {
         // todo bind default framebuffer
+        GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
 
         if(sizeUpdated) {
             GLES30.glViewport(0, 0, width, height)

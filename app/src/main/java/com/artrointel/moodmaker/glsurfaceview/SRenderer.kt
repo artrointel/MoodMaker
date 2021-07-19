@@ -10,6 +10,7 @@ class SRenderer(_world: RenderWorldBase) : GLSurfaceView.Renderer {
     private val world: RenderWorldBase = _world!!
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         Log.d("SRenderer", "onSurfaceCreated")
+        world.initialize()
     }
 
     override fun onDrawFrame(gl: GL10?) {

@@ -1,9 +1,12 @@
 package com.artrointel.moodmaker.kotesrenderengine
 
-import android.renderscript.Matrix3f
+import com.artrointel.moodmaker.kotesrenderengine.common.Matrix3
+import com.artrointel.moodmaker.kotesrenderengine.renderers.ITransformSupport
 import com.artrointel.moodmaker.kotesrenderengine.renderers.RendererBase
 
 open class Node2D {
+    var transform: Matrix3 = Matrix3()
+        private set
 
     private var renderers: ArrayList<RendererBase> = ArrayList()
 
@@ -35,7 +38,14 @@ open class Node2D {
         for(child in children) {
             child.render()
         }
+
         for(renderer in renderers) {
+            when(renderer) {
+                is ITransformSupport -> {
+                    renderer.setTransformMatrix(transform)
+                    transform.transformUpdated = false
+                }
+            }
             renderer.render()
         }
     }

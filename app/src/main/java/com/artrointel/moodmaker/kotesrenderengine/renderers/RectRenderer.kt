@@ -7,7 +7,7 @@ import com.artrointel.moodmaker.kotesrenderengine.gl.*
 import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 
-class RectRenderer : RendererBase() {
+class RectRenderer : RendererBase(), ITransformSupport {
     private var program: Program
     // Uniforms
     private var uModelMatrix: Uniform
@@ -28,28 +28,22 @@ class RectRenderer : RendererBase() {
         program = Program(vShader, fShader)
         uModelMatrix = Uniform(program, DataType.MAT3, "modelMatrix").set(Matrix3.IDENTITY.raw())
         aPos = Attribute(program, DataType.VEC3, "aPos").set(Mesh.QUAD_3D.data)
-        aColor = Attribute(program, DataType.VEC3, "aColor").set(Mesh.QUAD_3D.data)
+        aColor = Attribute(program, DataType.VEC3, "aColor").set(Mesh.QUAD_3D_UV.data)
 
         attrSet.set(aPos, aColor)
 
         attachGlObjects(program, uModelMatrix, attrSet)
     }
 
-    internal fun setTransformMatrix(xForm: Matrix3) {
+    override fun setTransformMatrix(xForm: Matrix3) {
         uModelMatrix.set(xForm.raw())
     }
 
-    override fun onPrepare() {
-        GLES30.glClearColor(1.0f, 1.0f, 1.0f, 1.0f)
-    }
+    override fun onPrepare() {}
 
     override fun onRender() {
-        GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
         GLES30.glDrawArrays(Mesh.QUAD_3D.order, 0, Mesh.QUAD_2D.getDataCount())
     }
 
-    override fun onDispose() {
-        TODO("Not yet implemented")
-    }
-
+    override fun onDispose() {}
 }

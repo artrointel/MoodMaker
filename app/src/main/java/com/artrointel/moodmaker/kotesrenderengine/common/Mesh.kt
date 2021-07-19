@@ -12,7 +12,7 @@ class Mesh(_vertices: FloatArray, _dimension: Int, _order: Int) {
             1.0f, 1.0f
         ), 2, GLES30.GL_TRIANGLE_STRIP)
 
-        val QUAD_2D_NORM = Mesh(floatArrayOf(
+        val QUAD_2D_UV = Mesh(floatArrayOf(
             0.0f, 0.0f,
             0.0f, 1.0f,
             1.0f, 0.0f,
@@ -26,6 +26,12 @@ class Mesh(_vertices: FloatArray, _dimension: Int, _order: Int) {
             1.0f, 1.0f, 0.0f
         ), 3, GLES30.GL_TRIANGLE_STRIP)
 
+        val QUAD_3D_UV = Mesh(floatArrayOf(
+            0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f,
+            1.0f, 0.0f, 0.0f,
+            1.0f, 1.0f, 0.0f
+        ), 3, GLES30.GL_TRIANGLE_STRIP)
     }
 
     val data: FloatArray = _vertices
