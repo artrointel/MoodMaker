@@ -1,5 +1,6 @@
 package com.artrointel.moodmaker
 
+import com.artrointel.moodmaker.kotesrenderengine.RectNode2D
 import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
 
 // controller of the world
@@ -18,5 +19,13 @@ class MoodMaker {
                 return instance
             }
         }
+    }
+
+    fun load(moodTheme: MoodTheme) {
+
+    }
+
+    fun runTestWorld() {
+        world!!.getRoot().appendChild(RectNode2D())
     }
 }

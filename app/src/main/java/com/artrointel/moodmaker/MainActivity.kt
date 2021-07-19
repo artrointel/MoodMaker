@@ -10,10 +10,12 @@ import android.view.View
  * status bar and navigation/system bar) with user interaction.
  */
 class MainActivity : AppCompatActivity() {
+    var moodTheme = MoodTheme()
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // load mood theme from saved
     }
 
     override fun onResume() {

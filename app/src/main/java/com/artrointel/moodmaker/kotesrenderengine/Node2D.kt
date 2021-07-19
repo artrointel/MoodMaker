@@ -1,10 +1,11 @@
 package com.artrointel.moodmaker.kotesrenderengine
 
-import com.artrointel.moodmaker.kotesrenderengine.common.Rect
+import android.renderscript.Matrix3f
 import com.artrointel.moodmaker.kotesrenderengine.renderers.RendererBase
 
 open class Node2D {
-    private var geometry: Rect = Rect() // todo use transform matrix
+    var transFormMatrix = Matrix3f()
+
     private var renderers: ArrayList<RendererBase> = ArrayList()
 
     private var parent: Node2D? = null
@@ -20,16 +21,6 @@ open class Node2D {
 
     fun removeChild(node: Node2D) {
         children.remove(node)
-    }
-
-    open fun setSize(_width: Float, _height: Float) {
-        geometry.width = _width
-        geometry.height = _height
-    }
-
-    open fun setPosition(_x: Float, _y: Float) {
-        geometry.x = _x
-        geometry.y = _y
     }
 
     protected fun add(renderer: RendererBase) {

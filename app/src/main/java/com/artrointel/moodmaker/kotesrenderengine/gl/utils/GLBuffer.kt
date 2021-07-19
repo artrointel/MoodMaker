@@ -1,5 +1,6 @@
 package com.artrointel.moodmaker.kotesrenderengine.gl.utils
 
+import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 import java.nio.Buffer
 import java.nio.FloatBuffer
 import java.nio.IntBuffer
@@ -16,7 +17,8 @@ internal class GLBuffer {
             is FloatArray -> dataBuffer =
                 FloatBuffer.allocate(data.size).put(data as FloatArray)
         }
-        assert(dataBuffer != null, lazyMessage = {"Cannot created buffer!"});
+        dataBuffer!!.rewind() // ready to read
+        Debugger.assertIf(dataBuffer == null, "Cannot created buffer!")
         return this
     }
 
@@ -33,7 +35,6 @@ internal class GLBuffer {
     }
 
     fun get() : Buffer {
-        dataBuffer!!.rewind()
         return dataBuffer!!
     }
 }

@@ -36,6 +36,8 @@ class RenderFragment : Fragment() {
         // todo
         // sView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
         MoodMaker.getInstance()!!.world = world
+
+        MoodMaker.getInstance()!!.runTestWorld()
         return sView
     }
 }
