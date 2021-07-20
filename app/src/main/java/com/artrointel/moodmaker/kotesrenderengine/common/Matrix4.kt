@@ -8,8 +8,9 @@ class Matrix4 {
         val IDENTITY : Matrix4 = Matrix4()
     }
 
-    var transformUpdated = true
+    var transformUpdated = false
         internal set
+
     private var mat4: Matrix4f = Matrix4f()
 
     internal fun raw(): FloatArray {
@@ -18,17 +19,21 @@ class Matrix4 {
 
     fun translate(x: Float, y: Float, z: Float) {
         mat4.translate(x, y, z)
+        transformUpdated = true
     }
 
     fun rotate(angle: Float, axisX: Float, axisY: Float, axisZ: Float) {
         mat4.rotate(angle, axisX, axisY, axisZ)
+        transformUpdated = true
     }
 
     fun scale(x: Float, y: Float, z: Float) {
         mat4.scale(x, y, z)
+        transformUpdated = true
     }
 
     fun loadProperOrtho(width: Int, height: Int) {
         mat4.loadOrtho(0f, width.toFloat(), 0f, height.toFloat(), -1.0f, 1.0f)
+        transformUpdated = true
     }
 }

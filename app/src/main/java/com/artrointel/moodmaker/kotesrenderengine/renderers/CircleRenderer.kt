@@ -1,15 +1,13 @@
 package com.artrointel.moodmaker.kotesrenderengine.renderers
 
 import android.opengl.GLES30
-import com.artrointel.moodmaker.kotesrenderengine.KotESContext
-import com.artrointel.moodmaker.kotesrenderengine.common.Matrix3
 import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
 import com.artrointel.moodmaker.kotesrenderengine.common.Mesh
 import com.artrointel.moodmaker.kotesrenderengine.gl.*
 import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 
-class CircleRenderer: RendererBase(), ITransformSupport, ScreenSizeChangedListener {
+class CircleRenderer: RendererBase(), IRendererProjectionListener, IRendererTransformListener {
     private var program: Program
 
     // Uniforms
@@ -40,18 +38,15 @@ class CircleRenderer: RendererBase(), ITransformSupport, ScreenSizeChangedListen
         attachGlObjects(program, uProjMatrix, uModelMatrix, attrSet)
     }
 
-    override fun onScreenSizeUpdated(_width: Int, _height: Int) {
-        uProjMatrix.set(KotESContext.getCurrent().projectionMatrix)
+    override fun onProjectionUpdated(_matrix: Matrix4) {
+        uProjMatrix.set(_matrix.raw())
     }
 
-    override fun setTransformMatrix(xForm: Matrix4) {
-        uModelMatrix.set(xForm.raw())
+    override fun onTransformUpdated(_matrix: Matrix4) {
+        uModelMatrix.set(_matrix.raw())
     }
 
-    override fun onPrepare() {
-        KotESContext.getCurrent().screenSizeChangedListener.add(this) // todo could be done in base class
-        uProjMatrix.set(KotESContext.getCurrent().projectionMatrix.raw())
-    }
+    override fun onPrepare() {}
 
     override fun onRender() {
         GLES30.glEnable(GLES30.GL_BLEND)

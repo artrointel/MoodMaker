@@ -7,7 +7,7 @@ class Matrix3 {
         val IDENTITY : Matrix3 = Matrix3()
     }
 
-    var transformUpdated = true
+    var transformUpdated = false
         internal set
     private var mat3: Matrix3f = Matrix3f()
 

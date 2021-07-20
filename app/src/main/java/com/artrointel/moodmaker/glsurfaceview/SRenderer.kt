@@ -7,7 +7,7 @@ import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
 class SRenderer(_world: RenderWorldBase) : GLSurfaceView.Renderer {
-    private val world: RenderWorldBase = _world!!
+    private val world: RenderWorldBase = _world
     override fun onSurfaceCreated(gl: GL10?, config: EGLConfig?) {
         Log.d("SRenderer", "onSurfaceCreated")
         world.initialize()
@@ -19,7 +19,7 @@ class SRenderer(_world: RenderWorldBase) : GLSurfaceView.Renderer {
     }
 
     override fun onSurfaceChanged(gl: GL10?, width: Int, height: Int) {
-        Log.d("SRenderer", "onSurfaceChanged: " + width + "," + height)
+        Log.d("SRenderer", "onSurfaceChanged: $width, $height")
         world.updateSize(width, height)
     }
 }

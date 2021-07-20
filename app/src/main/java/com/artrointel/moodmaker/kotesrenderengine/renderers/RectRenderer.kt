@@ -1,16 +1,17 @@
 package com.artrointel.moodmaker.kotesrenderengine.renderers
 
 import android.opengl.GLES30
-import com.artrointel.moodmaker.kotesrenderengine.common.Matrix3
 import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
 import com.artrointel.moodmaker.kotesrenderengine.common.Mesh
 import com.artrointel.moodmaker.kotesrenderengine.gl.*
 import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 
-class RectRenderer : RendererBase(), ITransformSupport {
+class RectRenderer : RendererBase(), IRendererProjectionListener, IRendererTransformListener {
     private var program: Program
+
     // Uniforms
+    private var uProjMatrix: Uniform
     private var uModelMatrix: Uniform
 
     // Attributes
@@ -27,6 +28,7 @@ class RectRenderer : RendererBase(), ITransformSupport {
             Assets.getShaderString("base2D.fsh.glsl"))
 
         program = Program(vShader, fShader)
+        uProjMatrix = Uniform(program, DataType.MAT4,"projMatrix").set(Matrix4.IDENTITY.raw())
         uModelMatrix = Uniform(program, DataType.MAT4, "modelMatrix").set(Matrix4.IDENTITY.raw())
         aPos = Attribute(program, DataType.VEC3, "aPos").set(Mesh.QUAD_3D.data)
         aColor = Attribute(program, DataType.VEC3, "aColor").set(Mesh.QUAD_3D_UV.data)
@@ -36,8 +38,12 @@ class RectRenderer : RendererBase(), ITransformSupport {
         attachGlObjects(program, uModelMatrix, attrSet)
     }
 
-    override fun setTransformMatrix(xForm: Matrix4) {
-        uModelMatrix.set(xForm.raw())
+    override fun onProjectionUpdated(_matrix: Matrix4) {
+        uProjMatrix.set(_matrix.raw())
+    }
+
+    override fun onTransformUpdated(_matrix: Matrix4) {
+        uModelMatrix.set(_matrix.raw())
     }
 
     override fun onPrepare() {}

@@ -1,17 +1,36 @@
 package com.artrointel.moodmaker.kotesrenderengine
 import android.content.Context
 import android.opengl.GLES30
+import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
 
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 
 abstract class RenderWorldBase(_context: Context) {
+    companion object {
+        private var worldMap = HashMap<Long, RenderWorldBase>()
+
+        internal fun put(world: RenderWorldBase) {
+            Debugger.assertIf(
+                worldMap[Thread.currentThread().id] != null,
+                "Already exists the world !!")
+            worldMap[Thread.currentThread().id] = world
+        }
+
+        internal fun get(): RenderWorldBase {
+            return worldMap[Thread.currentThread().id]!!
+        }
+    }
+
     private var context: Context = _context
     private var width: Int = 0
     private var height: Int = 0
+    var projectionMatrix: Matrix4 = Matrix4()
+        private set
+
     private var sizeUpdated: Boolean = true
 
-    private var rootNode: Node2D = Node2D()
+    private var rootNode: Node3D = Node3D()
 
     init {
         Assets.asset = context.assets
@@ -20,7 +39,7 @@ abstract class RenderWorldBase(_context: Context) {
     abstract fun invalidate()
 
     open fun initialize() {
-        KotESContext.createContext()
+        put(this)
         GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
     }
 
@@ -29,13 +48,13 @@ abstract class RenderWorldBase(_context: Context) {
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
 
         if(sizeUpdated) {
-            var esContext = KotESContext.getCurrent()
             GLES30.glViewport(0, 0, width, height)
-            esContext!!.updateScreenSize(width, height)
             sizeUpdated = false
         }
 
         rootNode.render()
+
+        projectionMatrix.transformUpdated = false
 
         var err = GLES30.glGetError()
         while(err != GLES30.GL_NO_ERROR) {
@@ -47,10 +66,11 @@ abstract class RenderWorldBase(_context: Context) {
         width = _width
         height = _height
         sizeUpdated = true
-        invalidate()
+        projectionMatrix.loadProperOrtho(width, height)
+        render()
     }
 
-    fun getRoot(): Node2D {
+    fun getRoot(): Node3D {
         return rootNode
     }
 }

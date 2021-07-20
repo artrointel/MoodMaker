@@ -1,7 +1,7 @@
 package com.artrointel.moodmaker
 
-import com.artrointel.moodmaker.kotesrenderengine.CircleNode2D
-import com.artrointel.moodmaker.kotesrenderengine.RectNode2D
+import com.artrointel.moodmaker.kotesrenderengine.CircleNode3D
+import com.artrointel.moodmaker.kotesrenderengine.RectNode3D
 import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
 
 // controller of the world
@@ -27,11 +27,11 @@ class MoodMaker {
     }
 
     fun runTestWorld() {
-        var debugNode = RectNode2D()
+        var debugNode = RectNode3D()
         //debugNode.transform.rotate(45f, 0f, 0f, 1f)
         //debugNode.transform.translate(0.5f, 0.0f, 0.0f)
         //world!!.getRoot().appendChild(debugNode)
-        var circleNode = CircleNode2D()
+        var circleNode = CircleNode3D()
         circleNode.transform.translate(300f, 300f, 0f)
         circleNode.transform.scale(300f, 300f, 1f)
         world!!.getRoot().appendChild(circleNode)

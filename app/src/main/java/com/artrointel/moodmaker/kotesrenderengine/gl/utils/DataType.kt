@@ -27,6 +27,9 @@ enum class DataType(val dataLength: Int, val glConstantType: Int) {
             is FloatArray -> {
                 Debugger.assertIf(this == INT, errString)
             }
+            else -> {
+                Debugger.assert(errString)
+            }
         }
     }
 }
