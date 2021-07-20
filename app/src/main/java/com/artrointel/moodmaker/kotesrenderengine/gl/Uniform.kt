@@ -31,12 +31,12 @@ class Uniform(_program: Program, uniformType: DataType, uniformName: String, dat
         return this
     }
 
-    override fun bind() {
-        uniformUpdater!!.update()
-    }
-
     override fun create() {
         location = GLES30.glGetUniformLocation(program.id, name)
+    }
+
+    override fun bind() {
+        uniformUpdater!!.update()
     }
 
     override fun dispose() {

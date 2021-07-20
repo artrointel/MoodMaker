@@ -14,10 +14,6 @@ class AttributeSet : IGLObject {
         }
     }
 
-    override fun bind() {
-        GLES30.glBindVertexArray(vaoId)
-    }
-
     override fun create() {
         // Create a vao
         var _vaoId = IntBuffer.allocate(1)
@@ -28,6 +24,10 @@ class AttributeSet : IGLObject {
         for(attribute in attributes) {
             attribute.create()
         }
+    }
+
+    override fun bind() {
+        GLES30.glBindVertexArray(vaoId)
     }
 
     override fun dispose() {

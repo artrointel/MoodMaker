@@ -1,5 +1,4 @@
 #version 320 es
-// inspired from https://www.shadertoy.com/view/XsjGDt
 precision highp float;
 
 uniform mat4 projMatrix;

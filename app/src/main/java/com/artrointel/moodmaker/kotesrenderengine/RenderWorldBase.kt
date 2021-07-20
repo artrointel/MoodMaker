@@ -22,7 +22,8 @@ abstract class RenderWorldBase(_context: Context) {
         }
     }
 
-    private var context: Context = _context
+    var context: Context = _context
+        private set
     private var width: Int = 0
     private var height: Int = 0
     var projectionMatrix: Matrix4 = Matrix4()
@@ -55,11 +56,6 @@ abstract class RenderWorldBase(_context: Context) {
         rootNode.render()
 
         projectionMatrix.transformUpdated = false
-
-        var err = GLES30.glGetError()
-        while(err != GLES30.GL_NO_ERROR) {
-            Debugger.log("World", "GLError:$err")
-        }
     }
 
     fun updateSize(_width: Int, _height: Int) {

@@ -3,6 +3,7 @@ package com.artrointel.moodmaker.kotesrenderengine.gl
 import android.opengl.GLES30
 import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
 import com.artrointel.moodmaker.kotesrenderengine.gl.utils.GLBuffer
+import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 import java.nio.IntBuffer
 
 class Attribute(_program: Program, _type: DataType, attributeName: String) : IGLObject {
@@ -22,25 +23,27 @@ class Attribute(_program: Program, _type: DataType, attributeName: String) : IGL
         return this
     }
 
-
-    override fun bind() {
-        location = GLES30.glGetAttribLocation(program.id, name)
-        GLES30.glVertexAttribPointer(location, type.dataLength, findAttribType(), false, 0, 0)
-        GLES30.glEnableVertexAttribArray(location) // enable the attribute
-    }
-
     override fun create() {
-        // Create a vbo and upload buffer data
+        location = GLES30.glGetAttribLocation(program.id, name)
+        if(location == -1) {
+            Debugger.log(this as Unit, "Attribute:$name doesn't exist in current program${program.id}")
+            return
+        }
+
         vboId = IntBuffer.allocate(1)
         GLES30.glGenBuffers(1, vboId)
         vboId.rewind()
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, vboId.get(0))
         GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, 4 * buffer.size(), buffer.get(), GLES30.GL_STATIC_DRAW)
 
-        // Find location from the program by name and notify the config. of this attribute
-        location = GLES30.glGetAttribLocation(program.id, name)
         GLES30.glVertexAttribPointer(location, type.dataLength, findAttribType(), false, 0, 0)
-        GLES30.glEnableVertexAttribArray(location) // enable the attribute
+        GLES30.glEnableVertexAttribArray(location)
+    }
+
+    override fun bind() {
+        if(location == -1) return
+        GLES30.glVertexAttribPointer(location, type.dataLength, findAttribType(), false, 0, 0)
+        GLES30.glEnableVertexAttribArray(location)
     }
 
     private fun findAttribType(): Int {

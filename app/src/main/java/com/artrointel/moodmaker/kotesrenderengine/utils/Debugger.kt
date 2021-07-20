@@ -5,12 +5,17 @@ import android.util.Log
 class Debugger {
     companion object {
         private const val tag: String = "Debugger"
+
         fun log(string: String) {
             Log.d(tag, string)
         }
 
-        fun log(tag: String, string: String) {
-            Log.d(tag, string)
+        fun log(objAsTag: Unit, string: String) {
+            Log.d(objAsTag.javaClass.name, string)
+        }
+
+        fun log(_tag: String, string: String) {
+            Log.d(_tag, string)
         }
 
         fun assert(string: String) {

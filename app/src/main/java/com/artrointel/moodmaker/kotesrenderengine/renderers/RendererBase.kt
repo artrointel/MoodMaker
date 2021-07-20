@@ -9,16 +9,15 @@ abstract class RendererBase() {
     private var needToDraw: Boolean = true
     private var needToPrepare: Boolean = true
 
-    fun invalidate(_needToDraw: Boolean = true) {
-        needToDraw = _needToDraw
+    abstract fun onInitializeGLObjects(): Array<IGLObject>
+
+    internal fun initialize() {
+        glObjects.clear()
+        glObjects.addAll(onInitializeGLObjects())
     }
 
-    fun attachGlObjects(vararg _glObjects: IGLObject) {
-        for(glObject in _glObjects) {
-            if(!glObjects.contains(glObject)) {
-                glObjects.add(glObject)
-            }
-        }
+    fun invalidate(_needToDraw: Boolean = true) {
+        needToDraw = _needToDraw
     }
 
     fun detach(glObject: IGLObject) {
@@ -42,9 +41,10 @@ abstract class RendererBase() {
      */
     abstract fun onDispose()
 
-    internal fun render() {
-
+    internal fun prepare() {
         if(needToPrepare) {
+            initialize()
+
             // create gl objects
             for(glObj in glObjects) {
                 glObj.create()
@@ -52,7 +52,9 @@ abstract class RendererBase() {
             onPrepare()
             needToPrepare = false
         }
+    }
 
+    internal fun render() {
         if(!needToDraw) {
             return
         }

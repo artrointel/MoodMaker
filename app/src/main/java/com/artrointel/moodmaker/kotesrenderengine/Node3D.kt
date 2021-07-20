@@ -41,6 +41,8 @@ open class Node3D {
         }
 
         for(renderer in renderers) {
+            renderer.prepare()
+
             if(renderer is IRendererTransformListener) {
                 if(transform.transformUpdated) {
                     renderer.onTransformUpdated(transform)

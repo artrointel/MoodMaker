@@ -19,6 +19,13 @@ class Mesh(_vertices: FloatArray, _dimension: Int, _order: Int) {
             1.0f, 1.0f
         ), 2, GLES30.GL_TRIANGLE_STRIP)
 
+        val QUAD_2D_UV_FLIP = Mesh(floatArrayOf(
+            0.0f, 1.0f,
+            0.0f, 0.0f,
+            1.0f, 1.0f,
+            1.0f, 0.0f
+        ), 2, GLES30.GL_TRIANGLE_STRIP)
+
         val QUAD_3D = Mesh(floatArrayOf(
             -1.0f, -1.0f, 0.0f,
             -1.0f, 1.0f, 0.0f,

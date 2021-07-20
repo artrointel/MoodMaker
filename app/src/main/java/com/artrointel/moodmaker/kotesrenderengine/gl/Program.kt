@@ -11,11 +11,6 @@ class Program(vsh: Shader, fsh: Shader) : IGLObject  {
 
     internal var id: Int = -1
 
-    override fun bind() {
-        Debugger.assertIfNot(isAlive, "GL Shader Program Not exists")
-        GLES30.glUseProgram(id)
-    }
-
     override fun create() {
         isAlive = true
 
@@ -37,10 +32,16 @@ class Program(vsh: Shader, fsh: Shader) : IGLObject  {
                 var err = GLES30.glGetProgramInfoLog(id)
                 Debugger.assert("GL Shader Program Not exists: $err")
             }
+            GLES30.glUseProgram(id)
         }
         else {
             isAlive = false
         }
+    }
+
+    override fun bind() {
+        Debugger.assertIfNot(isAlive, "GL Shader Program Not exists")
+        GLES30.glUseProgram(id)
     }
 
     override fun dispose() {

@@ -8,24 +8,24 @@ import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 
 class CircleRenderer: RendererBase(), IRendererProjectionListener, IRendererTransformListener {
-    private var program: Program
+    private lateinit var program: Program
 
     // Uniforms
-    private var uProjMatrix: Uniform
-    private var uModelMatrix: Uniform
+    private lateinit var uProjMatrix: Uniform
+    private lateinit var uModelMatrix: Uniform
 
     // Attributes
     private var attrSet: AttributeSet = AttributeSet()
-    private var aPos: Attribute
-    private var aColor: Attribute
+    private lateinit var aPos: Attribute
+    private lateinit var aColor: Attribute
 
-    init {
+    override fun onInitializeGLObjects(): Array<IGLObject> {
         val vShader = Shader(
             Shader.TYPE.VERTEX,
-            Assets.getShaderString("circle2D.vsh.glsl"))
+            Assets.getShaderString("circle.vsh.glsl"))
         val fShader = Shader(
             Shader.TYPE.FRAGMENT,
-            Assets.getShaderString("circle2D.fsh.glsl"))
+            Assets.getShaderString("circle.fsh.glsl"))
 
         program = Program(vShader, fShader)
         uProjMatrix = Uniform(program, DataType.MAT4,"projMatrix").set(Matrix4.IDENTITY.raw())
@@ -35,15 +35,7 @@ class CircleRenderer: RendererBase(), IRendererProjectionListener, IRendererTran
 
         attrSet.set(aPos, aColor)
 
-        attachGlObjects(program, uProjMatrix, uModelMatrix, attrSet)
-    }
-
-    override fun onProjectionUpdated(_matrix: Matrix4) {
-        uProjMatrix.set(_matrix.raw())
-    }
-
-    override fun onTransformUpdated(_matrix: Matrix4) {
-        uModelMatrix.set(_matrix.raw())
+        return arrayOf(program, uProjMatrix, uModelMatrix, attrSet)
     }
 
     override fun onPrepare() {}
@@ -51,11 +43,17 @@ class CircleRenderer: RendererBase(), IRendererProjectionListener, IRendererTran
     override fun onRender() {
         GLES30.glEnable(GLES30.GL_BLEND)
         GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA)
-        GLES30.glDrawArrays(Mesh.QUAD_3D.order, 0, Mesh.QUAD_2D.getDataCount())
+        GLES30.glDrawArrays(Mesh.QUAD_2D.order, 0, Mesh.QUAD_2D.getDataCount())
         GLES30.glDisable(GLES30.GL_BLEND)
     }
 
-    override fun onDispose() {
-        TODO("Not yet implemented")
+    override fun onDispose() {}
+
+    override fun onProjectionUpdated(_matrix: Matrix4) {
+        uProjMatrix.set(_matrix.raw())
+    }
+
+    override fun onTransformUpdated(_matrix: Matrix4) {
+        uModelMatrix.set(_matrix.raw())
     }
 }
