@@ -38,6 +38,8 @@ class Matrix3 {
     }
 
     internal fun raw(): FloatArray {
-        return mat3.array
+        var m = Matrix3f(mat3.array)
+        m.transpose()
+        return m.array
     }
 }

@@ -5,7 +5,7 @@ import kotlin.collections.ArrayList
 
 abstract class RendererBase() {
 
-    private var glObjects: ArrayList<IGLObject> = ArrayList<IGLObject>()
+    private var glObjects: ArrayList<IGLObject> = ArrayList()
     private var needToDraw: Boolean = true
     private var needToPrepare: Boolean = true
 

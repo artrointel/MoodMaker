@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     android:theme="@style/Theme.MoodMaker.Fullscreen"
     tools:context=".MainActivity">
-
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.artrointel.moodmaker.fragments.RenderFragment"
         android:id="@+id/render_fragment"/>
-
 </FrameLayout>

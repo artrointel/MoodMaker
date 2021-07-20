@@ -28,10 +28,12 @@ class MoodMaker {
 
     fun runTestWorld() {
         var debugNode = RectNode2D()
-        debugNode.transform.rotate(45.0f)
-        world!!.getRoot().appendChild(debugNode)
+        //debugNode.transform.rotate(45f, 0f, 0f, 1f)
+        //debugNode.transform.translate(0.5f, 0.0f, 0.0f)
+        //world!!.getRoot().appendChild(debugNode)
         var circleNode = CircleNode2D()
-        circleNode.transform.scale(0.5f, 0.5f)
+        circleNode.transform.translate(300f, 300f, 0f)
+        circleNode.transform.scale(300f, 300f, 1f)
         world!!.getRoot().appendChild(circleNode)
     }
 }

@@ -1,11 +1,11 @@
 package com.artrointel.moodmaker.kotesrenderengine
 
-import com.artrointel.moodmaker.kotesrenderengine.common.Matrix3
+import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
 import com.artrointel.moodmaker.kotesrenderengine.renderers.ITransformSupport
 import com.artrointel.moodmaker.kotesrenderengine.renderers.RendererBase
 
 open class Node2D {
-    var transform: Matrix3 = Matrix3()
+    var transform: Matrix4 = Matrix4()
         private set
 
     private var renderers: ArrayList<RendererBase> = ArrayList()
@@ -42,8 +42,10 @@ open class Node2D {
         for(renderer in renderers) {
             when(renderer) {
                 is ITransformSupport -> {
-                    renderer.setTransformMatrix(transform)
-                    transform.transformUpdated = false
+                    if(transform.transformUpdated) {
+                        renderer.setTransformMatrix(transform)
+                        transform.transformUpdated = false
+                    }
                 }
             }
             renderer.render()
