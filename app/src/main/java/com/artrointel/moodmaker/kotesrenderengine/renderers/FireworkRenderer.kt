@@ -17,8 +17,8 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
     private var uTime: Uniform
     // TODO use UBO instead
     private var uSpeedFactor: Uniform
-    private var uMinCount: Uniform
-    private var uMaxCount: Uniform
+    //private var uMinCount: Uniform
+    //private var uMaxCount: Uniform
     private var uMinParticles: Uniform
     private var uMaxParticles: Uniform
     private var uMinBrightness: Uniform
@@ -39,13 +39,11 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
         program = Program(vShader, fShader)
 
         uTime = Uniform(program, DataType.FLOAT, "uTime").set(0f)
-        uSpeedFactor = Uniform(program, DataType.FLOAT, "uSpeedFactor").set(0.2f)
-        uMinCount = Uniform(program, DataType.FLOAT, "uMinCount").set(3f)
-        uMaxCount = Uniform(program, DataType.FLOAT, "uMaxCount").set(5f)
-        uMinParticles = Uniform(program, DataType.FLOAT, "uMinParticles").set(15f)
-        uMaxParticles = Uniform(program, DataType.FLOAT, "uMaxParticles").set(30f)
-        uMinBrightness = Uniform(program, DataType.FLOAT, "uMinBrightness").set(0.0008f)
-        uMaxBrightness = Uniform(program, DataType.FLOAT, "uMaxBrightness").set(0.0032f)
+        uSpeedFactor = Uniform(program, DataType.FLOAT, "uSpeedFactor").set(0.20f)
+        uMinParticles = Uniform(program, DataType.FLOAT, "uMinParticles").set(40f)
+        uMaxParticles = Uniform(program, DataType.FLOAT, "uMaxParticles").set(50f)
+        uMinBrightness = Uniform(program, DataType.FLOAT, "uMinBrightness").set(0.0020f)
+        uMaxBrightness = Uniform(program, DataType.FLOAT, "uMaxBrightness").set(0.0030f)
         uProjMatrix = Uniform(program, DataType.MAT4,"projMatrix").set(Matrix4.IDENTITY.raw())
         uModelMatrix = Uniform(program, DataType.MAT4, "modelMatrix").set(Matrix4.IDENTITY.raw())
 
@@ -63,8 +61,6 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
                    _minParticles: Float, _maxParticles: Float,
                    _minBrightness: Float, _maxBrightness: Float) {
         uSpeedFactor.set(_speed)
-        uMinCount.set(_minCount)
-        uMaxCount.set(_maxCount)
         uMinParticles.set(_minParticles)
         uMaxParticles.set(_maxParticles)
         uMinBrightness.set(_minBrightness)
@@ -74,7 +70,7 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
     override fun onInitializeGLObjects(): Array<IGLObject> {
         return arrayOf(program,
             uTime, uSpeedFactor,
-            uMinCount, uMaxCount,
+            //uMinCount, uMaxCount,
             uMinParticles, uMaxParticles,
             uMinBrightness, uMaxBrightness,
             uProjMatrix, uModelMatrix,

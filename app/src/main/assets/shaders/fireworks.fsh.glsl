@@ -6,9 +6,6 @@ precision highp float;
 uniform float uTime;
 uniform float uSpeedFactor;
 
-uniform float uMinCount;
-uniform float uMaxCount;
-
 uniform float uMinParticles;
 uniform float uMaxParticles;
 
@@ -32,11 +29,6 @@ float Curve_Fadeout(float t)
     return (t -1.) * (t - 1.);
 }
 
-float BrightnessCurve_bk(float t)
-{
-    return (t*t*t*t - 2.*t*t*t + t*t) / 0.0625;
-}
-
 float BrightnessCurve(float t)
 {
     return (t*t*t*t - 2.*t*t*t + t*t) / 0.0625;
@@ -57,10 +49,10 @@ vec2 Rand12(float t)
     return rand2;
 }
 
-vec2 Rand12_Round_Increase(float t)
+vec2 Rand12_Round_Increase(float pid)
 {
-    float a = 2.0 * PI * fract(sin(23.3 * t + 11.23));
-    float r = (1.0 - Curve_Fadeout(fract(cos(322.2 * t + 111.2))));
+    float a = 2.0 * PI * pid;
+    float r = 1.0 - fract(cos(322.2 * pid + 111.2));
     return vec2(r*cos(a), r*sin(a));
 }
 
@@ -81,18 +73,17 @@ vec3 RandColor(float t, float brightRange)
     return HSV2RGB(vec3(h,s,v));
 }
 
-float Firework(vec2 uv, float t, float pc, float pb)
+
+float Firework(vec2 posOffset, float timeline, float nParticles, float brightness)
 {
-    float brightness = pb;
-    float dist = brightness / length(uv);
     float fireworkPattern = 0.0;
-    for (float i = 0.0; i < 1.0; i += 1.0 / pc)
+    for (float p = 0.0; p < 1.0; p += 1.0 / nParticles)
     {
-        float particle = brightness / length(Rand12_Round_Increase(i + 1.0) * t + uv);
-        float twinkle = cos(22.5 * (t + i)) * 0.3 + 0.7;
+        float particle = brightness / length(Rand12_Round_Increase(p + 1.0) * timeline + posOffset);
+        float twinkle = cos(22.5 * (timeline + p)) * 0.4 + 0.6;
         fireworkPattern += particle * twinkle;
     }
-    return fireworkPattern * BrightnessCurve(t);
+    return fireworkPattern * BrightnessCurve(timeline);
 }
 
 void main()
@@ -101,44 +92,14 @@ void main()
     float time = uTime * uSpeedFactor;
     float timeline = fract(time);
     float periodID = floor(time);
-    vec3 col = vec3(0.0);
 
-    // Explore firework for each shoot
-    float shoots = floor(mix(uMinCount, uMaxCount, 0.5 * Rand11(periodID) + 0.5));
-    for (float s = 0.0; s < timeline;  s += 1. / shoots)
-    {
-        float t  = timeline - s;
-        float tfl = floor(t) + periodID;
-        float seed = tfl + s;
-        vec4 rand = Rand14(seed);
-        vec2 uvOffset = rand.xy - 0.5;
-        //uvOffset.x *= screenRatio;
-        float fireworkScale = mix(0.2, 0.6, rand.z);
-        float particleCounts = mix(uMinParticles , uMaxParticles, rand.w);
-        float particleBrightness = mix(uMaxBrightness, uMinBrightness, Curve_Fadeout((particleCounts - uMinParticles)/(uMaxParticles - uMinParticles)));
-        float fireworkPattern = Firework((vUv + uvOffset) / fireworkScale, t, particleCounts, particleBrightness);
-        vec3 fireworkColor = RandColor((rand.z + rand.w) * 10.0 , 0.2);
-        col += fireworkPattern * fireworkColor;
-    }
-
-    // prev shoots
-    periodID -= 1.0;
-    float shoots_prev = floor(mix(uMinCount, uMaxCount, 0.5 * Rand11(periodID) + 0.5));
-    for (float s = 1.0 - 1./shoots_prev; s > timeline; s -= 1. / shoots_prev)
-    {
-        float t  = timeline  + 1.0 - s;
-        float tfl = floor(t) + periodID;
-        float seed = tfl + s;
-        vec4 rand = Rand14(seed);
-        vec2 uvOffset = rand.xy - 0.5;
-        //uvOffset.x *= screenRatio;
-        float fireworkScale = mix(0.2, 0.6, rand.z);
-        float particleCounts = mix(uMinParticles , uMaxParticles, rand.w);
-        float particleBrightness = mix(uMaxBrightness, uMinBrightness, Curve_Fadeout((particleCounts - uMinParticles)/(uMaxParticles - uMinParticles)));
-        float fireworkPattern = Firework((vUv + uvOffset) / fireworkScale, t, particleCounts, particleBrightness);
-        vec3 fireworkColor = RandColor((rand.z + rand.w) * 10.0 , 0.2);
-        col += fireworkPattern * fireworkColor;
-    }
-
-    FragColor = vec4(col, 1.0);
+    vec4 rand = Rand14(floor(timeline) + periodID) * 0.7;
+    vec2 uvOffset = rand.xy - 0.3;
+    //uvOffset.x *= screenRatio;
+    float fireworkScale = mix(0.6, 0.8, rand.z);
+    float particleCounts = mix(uMinParticles , uMaxParticles, rand.w);
+    float particleBrightness = mix(uMaxBrightness, uMinBrightness, rand.y);
+    float fireworkPattern = Firework((vUv + uvOffset) / fireworkScale, timeline, particleCounts, particleBrightness);
+    vec3 fireworkColor = RandColor((rand.z + rand.w) * 10.0 , 0.2); // color from uniform
+    FragColor = vec4(fireworkPattern * fireworkColor, 1.0);
 }
