@@ -26,11 +26,11 @@ open class Node3D {
         children.remove(node)
     }
 
-    protected fun add(renderer: RendererBase) {
+    fun add(renderer: RendererBase) {
         renderers.add(renderer)
     }
 
-    protected fun remove(renderer: RendererBase) {
+    fun remove(renderer: RendererBase) {
         renderers.remove(renderer)
     }
 

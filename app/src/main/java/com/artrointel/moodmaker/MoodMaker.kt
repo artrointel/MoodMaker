@@ -1,13 +1,13 @@
 package com.artrointel.moodmaker
 
+import android.animation.ValueAnimator
 import android.content.res.Resources
 import android.graphics.BitmapFactory
-import com.artrointel.moodmaker.kotesrenderengine.CircleNode3D
-import com.artrointel.moodmaker.kotesrenderengine.ImageNode
-import com.artrointel.moodmaker.kotesrenderengine.RectNode3D
-import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
+import com.artrointel.moodmaker.kotesrenderengine.*
+import com.artrointel.moodmaker.kotesrenderengine.renderers.FireworkRenderer
 import java.nio.ByteBuffer
 import java.nio.IntBuffer
+import java.util.*
 
 // controller of the world
 class MoodMaker {
@@ -50,5 +50,24 @@ class MoodMaker {
 
         world.getRoot().appendChild(imgNode)
 
+    }
+
+    fun runBackground() {
+        var bgNode = Node3D()
+        var firework = FireworkRenderer()
+        var t = Timer()
+        var initTime = Calendar.getInstance().timeInMillis
+        t.schedule(object: TimerTask(){
+            override fun run() {
+                var time = ((Calendar.getInstance().timeInMillis - initTime) / 1000).toFloat()
+                firework.setTime(time)
+            }
+        }, 0, (1000f/60f).toLong())
+
+        bgNode.add(firework)
+        bgNode.transform.translate(500f, 500f, 0f)
+        bgNode.transform.scale(500f,500f, 1f)
+
+        world.getRoot().appendChild(bgNode)
     }
 }

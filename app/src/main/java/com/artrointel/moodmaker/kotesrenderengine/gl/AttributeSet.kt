@@ -7,11 +7,12 @@ class AttributeSet : IGLObject {
     private var vaoId: Int = -1
     private var attributes: ArrayList<Attribute> = ArrayList()
 
-    fun set(vararg _attrs: Attribute) {
+    fun set(vararg _attrs: Attribute): AttributeSet {
         attributes.clear()
         for(attr in _attrs) {
             attributes.add(attr)
         }
+        return this
     }
 
     override fun create() {
