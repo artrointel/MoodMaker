@@ -89,7 +89,7 @@ float Firework(vec2 uv, float t, float pc, float pb)
     for (float i = 0.0; i < 1.0; i += 1.0 / pc)
     {
         float particle = brightness / length(Rand12_Round_Increase(i + 1.0) * t + uv);
-        float twinkle = cos(22.5 * (t + i)) * 0.5 + 0.5;
+        float twinkle = cos(22.5 * (t + i)) * 0.3 + 0.7;
         fireworkPattern += particle * twinkle;
     }
     return fireworkPattern * BrightnessCurve(t);

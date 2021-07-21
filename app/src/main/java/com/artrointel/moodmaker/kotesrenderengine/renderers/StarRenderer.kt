@@ -7,7 +7,7 @@ import com.artrointel.moodmaker.kotesrenderengine.gl.*
 import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 
-class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendererTransformListener {
+class StarRenderer() : RendererBase(), IRendererProjectionListener, IRendererTransformListener {
     private lateinit var program: Program
 
     // Uniforms
@@ -16,14 +16,6 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
 
     private var uTime: Uniform
     // TODO use UBO instead
-    private var uSpeedFactor: Uniform
-    private var uMinCount: Uniform
-    private var uMaxCount: Uniform
-    private var uMinParticles: Uniform
-    private var uMaxParticles: Uniform
-    private var uMinBrightness: Uniform
-    private var uMaxBrightness: Uniform
-
     // Attributes
     private var aPos: Attribute
     private var aUv: Attribute
@@ -32,25 +24,18 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
     init {
         val vShader = Shader(
             Shader.TYPE.VERTEX,
-            Assets.getShaderString("fireworks.vsh.glsl"))
+            Assets.getShaderString("stars.vsh.glsl"))
         val fShader = Shader(
             Shader.TYPE.FRAGMENT,
-            Assets.getShaderString("fireworks.fsh.glsl"))
+            Assets.getShaderString("stars.fsh.glsl"))
         program = Program(vShader, fShader)
 
         uTime = Uniform(program, DataType.FLOAT, "uTime").set(0f)
-        uSpeedFactor = Uniform(program, DataType.FLOAT, "uSpeedFactor").set(0.2f)
-        uMinCount = Uniform(program, DataType.FLOAT, "uMinCount").set(3f)
-        uMaxCount = Uniform(program, DataType.FLOAT, "uMaxCount").set(5f)
-        uMinParticles = Uniform(program, DataType.FLOAT, "uMinParticles").set(15f)
-        uMaxParticles = Uniform(program, DataType.FLOAT, "uMaxParticles").set(30f)
-        uMinBrightness = Uniform(program, DataType.FLOAT, "uMinBrightness").set(0.0008f)
-        uMaxBrightness = Uniform(program, DataType.FLOAT, "uMaxBrightness").set(0.0032f)
         uProjMatrix = Uniform(program, DataType.MAT4,"projMatrix").set(Matrix4.IDENTITY.raw())
         uModelMatrix = Uniform(program, DataType.MAT4, "modelMatrix").set(Matrix4.IDENTITY.raw())
 
         aPos = Attribute(program, DataType.VEC3, "aPos").set(Mesh.QUAD_3D.data)
-        aUv = Attribute(program, DataType.VEC2, "aUv").set(Mesh.QUAD_2D.data)
+        aUv = Attribute(program, DataType.VEC2, "aUv").set(Mesh.QUAD_2D_UV_FLIP.data)
         attrSet = AttributeSet().set(aPos, aUv)
     }
 
@@ -58,26 +43,9 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
         uTime.set(_timeInMs)
     }
 
-    fun setConfigs(_speed: Float = 1f,
-                   _minCount: Float, _maxCount: Float,
-                   _minParticles: Float, _maxParticles: Float,
-                   _minBrightness: Float, _maxBrightness: Float) {
-        uSpeedFactor.set(_speed)
-        uMinCount.set(_minCount)
-        uMaxCount.set(_maxCount)
-        uMinParticles.set(_minParticles)
-        uMaxParticles.set(_maxParticles)
-        uMinBrightness.set(_minBrightness)
-        uMaxBrightness.set(_maxBrightness)
-    }
-
     override fun onInitializeGLObjects(): Array<IGLObject> {
         return arrayOf(program,
-            uTime, uSpeedFactor,
-            uMinCount, uMaxCount,
-            uMinParticles, uMaxParticles,
-            uMinBrightness, uMaxBrightness,
-            uProjMatrix, uModelMatrix,
+            uTime, uProjMatrix, uModelMatrix,
             attrSet)
     }
 

@@ -24,8 +24,10 @@ abstract class RenderWorldBase(_context: Context) {
 
     var context: Context = _context
         private set
-    private var width: Int = 0
-    private var height: Int = 0
+    var width: Int = 0
+        private set
+    var height: Int = 0
+        private set
     var projectionMatrix: Matrix4 = Matrix4()
         private set
 
