@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         var button = findViewById<Button>(R.id.toggle)
         var renderFragment = supportFragmentManager.findFragmentById(R.id.render_fragment) as RenderFragment
+        renderFragment.setProgress(0.0f)
         button.setOnTouchListener { _: View, event: MotionEvent ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {

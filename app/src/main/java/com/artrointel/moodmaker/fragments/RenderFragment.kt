@@ -42,8 +42,12 @@ class RenderFragment : Fragment() {
     }
 
     fun setProgress(progress: Float) {
-        FocusDistortionScene.getInstance()!!.setFocusImageAlpha(progress)
-        FocusDistortionScene.getInstance()!!.setFocusImageScale(
-            10.0f - 9.0f * progress, 10.0f - 9.0f * progress)
+        FocusDistortionScene.getInstance()!!.setMaskImageAlpha(progress)
+        FocusDistortionScene.getInstance()!!.setMaskImageScale(
+            5.0f - 4.0f * progress, 5.0f - 4.0f * progress)
+
+        FocusDistortionScene.getInstance()!!.setRadius(progress * 1.5f + 1.0f)
+        FocusDistortionScene.getInstance()!!.setDepth(progress * 1.5f)
     }
+
 }
