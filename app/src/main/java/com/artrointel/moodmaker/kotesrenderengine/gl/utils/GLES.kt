@@ -8,7 +8,7 @@ class GLES {
         fun glAssertOnError() {
             var err = GLES30.glGetError()
             if(err != GLES30.GL_NO_ERROR)
-                Debugger.assert( "GLError:$err")
+                Debugger.assertFalse( "GLError:$err")
 
         }
 

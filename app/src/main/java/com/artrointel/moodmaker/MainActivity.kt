@@ -17,28 +17,30 @@ import com.artrointel.moodmaker.fragments.RenderFragment
 class MainActivity : AppCompatActivity() {
     lateinit var valueAnimator: ValueAnimator
     var toggle = false
+    var currentValue: Float = 0.0f
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var button = findViewById<Button>(R.id.toggle)
-        var renderFragment = supportFragmentManager.findFragmentById(R.id.render_fragment) as RenderFragment
+        val button = findViewById<Button>(R.id.toggle)
+        val renderFragment = supportFragmentManager.findFragmentById(R.id.render_fragment) as RenderFragment
         renderFragment.setProgress(0.0f)
+
         button.setOnTouchListener { _: View, event: MotionEvent ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     toggle = !toggle
-                    if(toggle) {
-                        valueAnimator = ValueAnimator.ofFloat(0.0f, 1.0f)
+                    valueAnimator = if (toggle) {
+                        ValueAnimator.ofFloat(0.0f, 1.0f)
                     } else {
-                        valueAnimator = ValueAnimator.ofFloat(1.0f, 0.0f)
+                        ValueAnimator.ofFloat(1.0f, 0.0f)
                     }
                     valueAnimator.apply {
-                        duration = 800
+                        duration = 600
                         addUpdateListener {
-                            val value: Float = it.animatedValue as Float
-                            renderFragment.setProgress(value)
+                            currentValue = it.animatedValue as Float
+                            renderFragment.setProgress(currentValue)
                         }
                     }
                     valueAnimator.start()

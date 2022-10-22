@@ -36,7 +36,7 @@ class Shader(_type: TYPE, _shaderString: String) : IGLObject {
         GLES30.glGetShaderiv(id, GLES20.GL_COMPILE_STATUS, success)
         if(success.get(0) == GLES30.GL_FALSE) {
             var err = GLES30.glGetShaderInfoLog(id)
-            Debugger.assert("GL Shader not compiled: $err")
+            Debugger.assertFalse("GL Shader not compiled: $err")
         }
     }
 

@@ -7,6 +7,9 @@ import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 import java.nio.IntBuffer
 
 class Attribute(_program: Program, _type: DataType, attributeName: String) : IGLObject {
+    companion object {
+        const val tag = "Attribute"
+    }
     private val program: Program = _program
 
     private val name: String = attributeName
@@ -18,15 +21,15 @@ class Attribute(_program: Program, _type: DataType, attributeName: String) : IGL
 
     // int, float, int array, float array
     fun <T: Any> set(data: T) : Attribute {
-        type.assertIfTypeMismatch(data)
+        type.check(data)
         buffer = GLBuffer().set(data)
         return this
     }
 
     override fun create() {
         location = GLES30.glGetAttribLocation(program.id, name)
-        if(location == -1) {
-            Debugger.log(this as Unit, "Attribute:$name doesn't exist in current program${program.id}")
+        if (location == -1) {
+            Debugger.log(tag, "Attribute:$name doesn't exist in current program${program.id}")
             return
         }
 
@@ -36,17 +39,17 @@ class Attribute(_program: Program, _type: DataType, attributeName: String) : IGL
         GLES30.glBindBuffer(GLES30.GL_ARRAY_BUFFER, vboId.get(0))
         GLES30.glBufferData(GLES30.GL_ARRAY_BUFFER, 4 * buffer.size(), buffer.get(), GLES30.GL_STATIC_DRAW)
 
-        GLES30.glVertexAttribPointer(location, type.dataLength, findAttribType(), false, 0, 0)
+        GLES30.glVertexAttribPointer(location, type.dataLength, findAttributeType(), false, 0, 0)
         GLES30.glEnableVertexAttribArray(location)
     }
 
     override fun bind() {
-        if(location == -1) return
-        GLES30.glVertexAttribPointer(location, type.dataLength, findAttribType(), false, 0, 0)
+        if (location == -1) return
+        GLES30.glVertexAttribPointer(location, type.dataLength, findAttributeType(), false, 0, 0)
         GLES30.glEnableVertexAttribArray(location)
     }
 
-    private fun findAttribType(): Int {
+    private fun findAttributeType(): Int {
         return when(type) {
             DataType.INT -> GLES30.GL_INT
             else -> GLES30.GL_FLOAT

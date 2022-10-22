@@ -1,6 +1,5 @@
 package com.artrointel.moodmaker.kotesrenderengine.gl.utils
 
-import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
 import java.nio.Buffer
 import java.nio.FloatBuffer
 import java.nio.IntBuffer

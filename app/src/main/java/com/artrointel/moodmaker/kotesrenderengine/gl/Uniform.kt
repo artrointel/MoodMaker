@@ -23,7 +23,7 @@ class Uniform(_program: Program, uniformType: DataType, uniformName: String, dat
 
     // int, float, int array, float array
     fun <T: Any> set(data: T) : Uniform {
-        type.assertIfTypeMismatch(data)
+        type.check(data)
         buffer = GLBuffer().set(data)
         if(uniformUpdater == null) {
             determineUniformUpdater(data, type.dataLength, count)
@@ -104,7 +104,7 @@ class Uniform(_program: Program, uniformType: DataType, uniformName: String, dat
                 }
             }
             else -> {
-                Debugger.assert("Cannot read the type of uniform data!")
+                Debugger.assertFalse("Cannot read the type of uniform data!")
             }
         }
     }

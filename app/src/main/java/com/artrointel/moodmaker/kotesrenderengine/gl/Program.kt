@@ -30,7 +30,7 @@ class Program(vsh: Shader, fsh: Shader) : IGLObject  {
             GLES30.glGetProgramiv(id, GLES30.GL_LINK_STATUS, success)
             if(success.get(0) == GLES30.GL_FALSE) {
                 var err = GLES30.glGetProgramInfoLog(id)
-                Debugger.assert("GL Shader Program Not exists: $err")
+                Debugger.assertFalse("GL Shader Program Not exists: $err")
             }
             GLES30.glUseProgram(id)
         }
@@ -40,7 +40,7 @@ class Program(vsh: Shader, fsh: Shader) : IGLObject  {
     }
 
     override fun bind() {
-        Debugger.assertIfNot(isAlive, "GL Shader Program Not exists")
+        Debugger.assert(isAlive, "GL Shader Program Not exists")
         GLES30.glUseProgram(id)
     }
 

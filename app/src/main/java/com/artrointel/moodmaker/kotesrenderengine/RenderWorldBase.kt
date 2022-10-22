@@ -3,7 +3,6 @@ import android.content.Context
 import android.graphics.Point
 import android.opengl.GLES30
 import android.util.DisplayMetrics
-import android.view.WindowManager
 import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
 
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
@@ -14,7 +13,7 @@ abstract class RenderWorldBase(_context: Context) {
         private var worldMap = HashMap<Long, RenderWorldBase>()
 
         internal fun put(world: RenderWorldBase) {
-            Debugger.assertIf(
+            Debugger.assertNot(
                 worldMap[Thread.currentThread().id] != null,
                 "Already exists the world !!")
             worldMap[Thread.currentThread().id] = world

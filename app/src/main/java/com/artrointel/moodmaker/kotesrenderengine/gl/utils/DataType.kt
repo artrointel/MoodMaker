@@ -12,23 +12,23 @@ enum class DataType(val dataLength: Int, val glConstantType: Int) {
     MAT3(9, GLES30.GL_FLOAT_MAT3),
     MAT4(16, GLES30.GL_FLOAT_MAT4);
 
-    fun <T: Any> assertIfTypeMismatch(data: T) {
-        var errString = "Mismatched Type(${this.toString()}) and actual data($data)"
+    fun <T: Any> check(data: T) {
+        val errString = "Mismatched Type(${this}) and actual data($data)"
         when(data) {
             is Int -> {
-                Debugger.assertIfNot(this == INT, errString)
+                Debugger.assert(this == INT, errString)
             }
             is IntArray -> {
-                Debugger.assertIfNot(this == INT, errString)
+                Debugger.assert(this == INT, errString)
             }
             is Float -> {
-                Debugger.assertIfNot(this == FLOAT, errString)
+                Debugger.assert(this == FLOAT, errString)
             }
             is FloatArray -> {
-                Debugger.assertIf(this == INT, errString)
+                Debugger.assertNot(this == INT, errString)
             }
             else -> {
-                Debugger.assert(errString)
+                Debugger.assertFalse(errString)
             }
         }
     }

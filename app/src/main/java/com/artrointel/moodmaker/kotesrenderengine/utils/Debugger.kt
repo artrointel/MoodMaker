@@ -18,15 +18,15 @@ class Debugger {
             Log.d(_tag, string)
         }
 
-        fun assert(string: String) {
+        fun assertFalse(string: String) {
             assert(false, lazyMessage = {string})
         }
 
-        fun assertIf(assert: Boolean, string: String) {
+        fun assertNot(assert: Boolean, string: String) {
             assert(!assert, lazyMessage = {string})
         }
 
-        fun assertIfNot(assert: Boolean, string: String) {
+        fun assert(assert: Boolean, string: String) {
             assert(assert, lazyMessage = {string})
         }
     }
