@@ -5,12 +5,12 @@ import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
 
 // TODO Make IRenderEngine and communicate with platform codes from Impl
 
-class RenderWorldImpl (context: Context, view: SView)
+class RenderWorldImpl (context: Context, view: KotEsSurfaceView)
     : RenderWorldBase(context) {
 
-    private val sView: SView = view
+    private val kotEsSurfaceView: KotEsSurfaceView = view
 
     override fun invalidate() {
-        sView.requestRender()
+        kotEsSurfaceView.requestRender()
     }
 }

@@ -83,6 +83,8 @@ class FireworkRenderer() : RendererBase(), IRendererProjectionListener, IRendere
         GLES30.glDrawArrays(Mesh.QUAD_2D.order, 0, Mesh.QUAD_2D.getDataCount())
     }
 
+    override fun onGLObjectUpdated() {}
+
     override fun onDispose() {}
 
     override fun onProjectionUpdated(projectionMatrix: Matrix4) {

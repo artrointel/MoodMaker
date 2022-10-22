@@ -34,6 +34,22 @@ open class Node3D {
         renderers.remove(renderer)
     }
 
+    // TODO Add General Geometry APIs
+    // add Transform class that have Quaternion orientation, Vec3 position, and scale.
+    // disable direct access of this transform matrix
+    // setOrientation Quaternion
+    // setPosition
+    fun setSize(x: Int, y: Int, z: Int) {
+        transform = Matrix4()
+        transform.translate(x.toFloat()*0.5f, y.toFloat()*0.5f, z.toFloat()*0.5f)
+        transform.scale(x.toFloat()*0.5f, y.toFloat()*0.5f, z.toFloat()*0.5f)
+    }
+
+    // TODO remove
+    fun resetMatrix() {
+        transform = Matrix4()
+    }
+
     // render dfs
     internal open fun render() {
         for(child in children) {

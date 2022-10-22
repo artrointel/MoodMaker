@@ -8,12 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.artrointel.moodmaker.MoodMaker
+import com.artrointel.moodmaker.FocusDistortionScene
 import com.artrointel.moodmaker.glsurfaceview.*
 import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
 
 class RenderFragment : Fragment() {
-    private lateinit var sView: SView
+    private lateinit var kotEsSurfaceView: KotEsSurfaceView
     private lateinit var world: RenderWorldBase
 
     override fun onCreateView(
@@ -28,15 +28,22 @@ class RenderFragment : Fragment() {
         if (cfg.glEsVersion?.get(0) != '3')
             throw Exception("The device does not support GL 3.x")
 
-        sView = SView(requireContext())
-        sView.setEGLContextClientVersion(3)
+        kotEsSurfaceView = KotEsSurfaceView(requireContext())
+        kotEsSurfaceView.setEGLContextClientVersion(3)
 
-        world = RenderWorldImpl(requireContext(), sView)
-        sView.setRenderer(SRenderer(world))
+        world = RenderWorldImpl(requireContext(), kotEsSurfaceView)
+        kotEsSurfaceView.setRenderer(KotEsSurfaceViewRenderer(world))
         // todo
-        // sView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
-        MoodMaker.getInstance()!!.world = world
-        MoodMaker.getInstance()!!.runTestFirework()
-        return sView
+        // kotEsSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
+
+        FocusDistortionScene.getInstance()!!.world = world
+        FocusDistortionScene.getInstance()!!.initWorld()
+        return kotEsSurfaceView
+    }
+
+    fun setProgress(progress: Float) {
+        FocusDistortionScene.getInstance()!!.setFocusImageAlpha(progress)
+        FocusDistortionScene.getInstance()!!.setFocusImageScale(
+            10.0f - 9.0f * progress, 10.0f - 9.0f * progress)
     }
 }

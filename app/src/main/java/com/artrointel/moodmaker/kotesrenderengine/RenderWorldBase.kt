@@ -1,6 +1,9 @@
 package com.artrointel.moodmaker.kotesrenderengine
 import android.content.Context
+import android.graphics.Point
 import android.opengl.GLES30
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
 
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
@@ -44,6 +47,14 @@ abstract class RenderWorldBase(_context: Context) {
     open fun initialize() {
         put(this)
         GLES30.glClearColor(0.0f, 0.0f, 0.0f, 1.0f)
+        GLES30.glEnable(GLES30.GL_BLEND)
+        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA);
+    }
+
+    fun getDisplaySize() : Point {
+        var displayMetrics = DisplayMetrics()
+        context.display!!.getRealMetrics(displayMetrics)
+        return Point(displayMetrics.widthPixels, displayMetrics.heightPixels)
     }
 
     fun render() {

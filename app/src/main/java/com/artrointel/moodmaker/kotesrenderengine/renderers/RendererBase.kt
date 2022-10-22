@@ -32,9 +32,14 @@ abstract class RendererBase() {
     abstract fun onPrepare()
 
     /**
-     * called on gl thread for every drawing call
+     * called on gl thread for every draw call
      */
     abstract fun onRender()
+
+    /**
+     * called on gl thread for every draw call before onRender()
+     */
+    abstract fun onGLObjectUpdated()
 
     /**
      * Called when the renderer object is disposed.
@@ -59,6 +64,7 @@ abstract class RendererBase() {
             return
         }
 
+        onGLObjectUpdated()
         for(glObj in glObjects) {
             glObj.bind()
         }

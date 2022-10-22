@@ -41,10 +41,11 @@ class CircleRenderer: RendererBase(), IRendererProjectionListener, IRendererTran
     override fun onPrepare() {}
 
     override fun onRender() {
-        GLES30.glEnable(GLES30.GL_BLEND)
-        GLES30.glBlendFunc(GLES30.GL_SRC_ALPHA, GLES30.GL_ONE_MINUS_SRC_ALPHA)
         GLES30.glDrawArrays(Mesh.QUAD_2D.order, 0, Mesh.QUAD_2D.getDataCount())
-        GLES30.glDisable(GLES30.GL_BLEND)
+    }
+
+    override fun onGLObjectUpdated() {
+
     }
 
     override fun onDispose() {}
