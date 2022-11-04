@@ -2,6 +2,7 @@ package com.artrointel.moodmaker
 
 import android.graphics.BitmapFactory
 import com.artrointel.moodmaker.kotesrenderengine.*
+import com.artrointel.moodmaker.kotesrenderengine.common.Vector3
 import com.artrointel.moodmaker.kotesrenderengine.renderers.FireworkRenderer
 import com.artrointel.moodmaker.kotesrenderengine.renderers.StarRenderer
 import com.artrointel.moodmaker.kotesrenderengine.utils.Debugger
@@ -28,14 +29,14 @@ class MoodMaker {
 
     fun runTestWorld() {
         val debugNode = RectNode3D()
-        debugNode.transform.translate(500f, 1000f, 0f)
-        debugNode.transform.scale(1000f, 2000f, 1.0f)
+        debugNode.transform.position = Vector3(500f, 1000f, 0f)
+        debugNode.transform.scale = Vector3(1000f, 2000f, 1.0f)
         world.getRoot().appendChild(debugNode)
 
         val circleNode = CircleNode3D()
 
-        circleNode.transform.translate(500f, 1500f, 0f)
-        circleNode.transform.scale(500f, 500f, 1f)
+        circleNode.transform.position = Vector3(500f, 1500f, 0f)
+        circleNode.transform.scale = Vector3(500f, 500f, 1f)
         world.getRoot().appendChild(circleNode)
 
         val bmp = BitmapFactory.decodeResource(world.context.resources, R.drawable.background_image)
@@ -44,8 +45,8 @@ class MoodMaker {
         buffer.rewind()
 
         val imgNode = ImageNode(buffer, bmp.width, bmp.height)
-        imgNode.transform.translate(500f, 1000f, 0f)
-        imgNode.transform.scale((bmp.width/4).toFloat(), (bmp.height/4).toFloat(), 1f)
+        imgNode.transform.position = Vector3(500f, 1000f, 0f)
+        imgNode.transform.scale = Vector3((bmp.width/4).toFloat(), (bmp.height/4).toFloat(), 1f)
         world.getRoot().appendChild(imgNode)
     }
 
@@ -62,8 +63,8 @@ class MoodMaker {
         }, 0, (1000f/60f).toLong())
 
         bgNode.add(firework)
-        bgNode.transform.translate(500f, 1000f, 0f)
-        bgNode.transform.scale(1000f,1000f, 1f)
+        bgNode.transform.position = Vector3(500f, 1000f, 0f)
+        bgNode.transform.scale = Vector3(1000f,1000f, 1f)
 
         world.getRoot().appendChild(bgNode)
     }
@@ -82,8 +83,8 @@ class MoodMaker {
         }, 0, (1000f/60f).toLong())
 
         bgNode.add(renderer)
-        bgNode.transform.translate(500f, 500f, 0f)
-        bgNode.transform.scale(500f,500f, 1f)
+        bgNode.transform.position = Vector3(500f, 500f, 0f)
+        bgNode.transform.scale = Vector3(500f,500f, 1f)
 
         world.getRoot().appendChild(bgNode)
     }

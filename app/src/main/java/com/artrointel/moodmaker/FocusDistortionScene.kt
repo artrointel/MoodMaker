@@ -1,12 +1,9 @@
 package com.artrointel.moodmaker
 
 import android.graphics.BitmapFactory
-import android.graphics.Point
 import android.graphics.PointF
-import com.artrointel.moodmaker.kotesrenderengine.FocusDistortionNode
-import com.artrointel.moodmaker.kotesrenderengine.ImageNode
-import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
-import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
+import com.artrointel.moodmaker.kotesrenderengine.*
+import com.artrointel.moodmaker.kotesrenderengine.common.Vector3
 import java.nio.ByteBuffer
 
 class FocusDistortionScene {
@@ -29,14 +26,21 @@ class FocusDistortionScene {
     }
 
     fun initWorld() {
+        val screenWidth = world.getDisplaySize().x.toFloat()
+        val screenHeight = world.getDisplaySize().y.toFloat()
         distortionNode = createFocusDistortionNode(R.drawable.background_image)
-        distortionNode.setSize(world.getDisplaySize().x, world.getDisplaySize().y, 0)
-        distortionNode.setResolution(world.getDisplaySize().x, world.getDisplaySize().y)
+        distortionNode.transform.position = Vector3(
+            screenWidth*0.5f,
+            screenHeight*0.5f, 0f)
+        distortionNode.transform.scale = Vector3(
+            screenWidth,
+            screenHeight, 0f)
+        distortionNode.setResolution(screenWidth.toInt(), screenHeight.toInt())
         distortionNode.setRadius(1.0f)
         world.getRoot().appendChild(distortionNode)
 
         maskNode = createImageNode(R.drawable.circle_masking)
-        maskNode.setSize(world.getDisplaySize().x, world.getDisplaySize().y, 0)
+        maskNode.transform.scale = Vector3(screenWidth, screenHeight, 0f)
         world.getRoot().appendChild(maskNode)
     }
 
@@ -45,9 +49,8 @@ class FocusDistortionScene {
     }
 
     fun setMaskImageScale(xScale: Float, yScale: Float) {
-        maskNode.resetMatrix()
-        maskNode.transform.translate(world.getDisplaySize().x * 0.5f, world.getDisplaySize().y * 0.5f, 0.0f)
-        maskNode.transform.scale(world.getDisplaySize().x * 0.5f * xScale, world.getDisplaySize().y * 0.5f * yScale, 0.0f)
+        maskNode.transform.position = Vector3(world.getDisplaySize().x * 0.5f, world.getDisplaySize().y * 0.5f, 0.0f)
+        maskNode.transform.scale = Vector3(world.getDisplaySize().x * xScale, world.getDisplaySize().y * yScale, 0.0f)
     }
 
     fun setRadius(radius: Float) {

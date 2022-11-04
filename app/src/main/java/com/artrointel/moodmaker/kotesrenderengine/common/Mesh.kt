@@ -26,10 +26,10 @@ class Mesh(val data: FloatArray, val dimension: Int, val order: Int) {
         ), 2, GLES30.GL_TRIANGLE_STRIP)
 
         val QUAD_3D = Mesh(floatArrayOf(
-            -1.0f, -1.0f, 0.0f,
-            -1.0f, 1.0f, 0.0f,
-            1.0f, -1.0f, 0.0f,
-            1.0f, 1.0f, 0.0f
+            -0.5f, -0.5f, 0.0f,
+            -0.5f, 0.5f, 0.0f,
+            0.5f, -0.5f, 0.0f,
+            0.5f, 0.5f, 0.0f
         ), 3, GLES30.GL_TRIANGLE_STRIP)
 
         val QUAD_3D_UV = Mesh(floatArrayOf(

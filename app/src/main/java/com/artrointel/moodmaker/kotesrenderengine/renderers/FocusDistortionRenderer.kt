@@ -82,7 +82,7 @@ class FocusDistortionRenderer(bufferFromImage: Buffer, width: Int, height: Int)
         uFocus = Uniform(program, DataType.VEC2, "uFocus", 1).set(
             floatArrayOf(0.5f, 0.5f))
         aPos = Attribute(program, DataType.VEC3, "aPos").set(Mesh.QUAD_3D.data)
-        aUv = Attribute(program, DataType.VEC2, "aUv").set(Mesh.QUAD_2D_UV_FLIP.data)
+        aUv = Attribute(program, DataType.VEC2, "aUv").set(Mesh.QUAD_2D_UV.data)
 
         attrSet.set(aPos, aUv)
 
