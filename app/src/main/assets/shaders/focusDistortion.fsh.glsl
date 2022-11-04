@@ -16,7 +16,7 @@ void main() {
     float depth = uDepth;
     vec2 center = uFocus;
 
-    vec2 uv = gl_FragCoord.xy / uResolution.xy; // norm uv [0,1]
+    vec2 uv = vUv; // norm uv [0,1]
     float aspect = uResolution.x / uResolution.y;
 
     float ax = (uv.x - center.x) * (uv.x - center.x) +

@@ -30,7 +30,7 @@ abstract class RenderWorldBase(_context: Context) {
         private set
     var height: Int = 0
         private set
-    var projectionMatrix: Matrix4 = Matrix4()
+    var projectionMatrix: Matrix4 = Matrix4(Matrix4.IDENTITY)
         private set
 
     private var sizeUpdated: Boolean = true
@@ -66,8 +66,6 @@ abstract class RenderWorldBase(_context: Context) {
         }
 
         rootNode.render()
-
-        projectionMatrix.transformUpdated = false
     }
 
     fun updateSize(_width: Int, _height: Int) {

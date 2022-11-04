@@ -5,35 +5,55 @@ import android.renderscript.Matrix4f
 class Matrix4 {
     // TODO make quaternion in future
     companion object {
-        val IDENTITY : Matrix4 = Matrix4()
+        val IDENTITY : Matrix4 = Matrix4(floatArrayOf(
+            1.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 1.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 1.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 1.0f
+        ))
+
+        fun multiply(l: Matrix4, r: Matrix4): Matrix4 {
+            var ret = Matrix4()
+            for(i in 0..3) {
+                for(j in 0..3) {
+                    var sum = 0f
+                    for(k in 0..3) {
+                        sum += l.array[4*k + i] * r.array[4*j + k]
+                    }
+                    ret.array[i + 4*j] = sum
+                }
+            }
+            return ret
+        }
     }
 
-    var transformUpdated = false
-        internal set
+    constructor() {
+        array = IDENTITY.array.clone()
+    }
 
-    private var mat4: Matrix4f = Matrix4f()
+    constructor(matrix4: Matrix4) {
+        array = matrix4.array.clone()
+    }
+
+    constructor(floatArray16: FloatArray) {
+        array = floatArray16.clone()
+    }
+
+    var array: FloatArray = FloatArray(16)
 
     internal fun raw(): FloatArray {
-        return mat4.array
+        return array
     }
 
-    fun translate(x: Float, y: Float, z: Float) {
-        mat4.translate(x, y, z)
-        transformUpdated = true
-    }
-
-    fun rotate(angle: Float, axisX: Float, axisY: Float, axisZ: Float) {
-        mat4.rotate(angle, axisX, axisY, axisZ)
-        transformUpdated = true
-    }
-
-    fun scale(x: Float, y: Float, z: Float) {
-        mat4.scale(x, y, z)
-        transformUpdated = true
+    fun setScale(scale: Vector3) {
+        array[0] = scale.x
+        array[5] = scale.y
+        array[10] = scale.z
     }
 
     fun loadProperOrtho(width: Int, height: Int) {
+        val mat4 = Matrix4f()
         mat4.loadOrtho(0f, width.toFloat(), 0f, height.toFloat(), -1.0f, 1.0f)
-        transformUpdated = true
+        array = mat4.array
     }
 }
