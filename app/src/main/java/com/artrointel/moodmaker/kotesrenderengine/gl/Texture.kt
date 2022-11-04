@@ -11,7 +11,7 @@ class Texture(_program: Program, _samplerName: String,
     private var program: Program = _program
     internal var id: Int = -1
         private set
-    private var location: Int = -1
+    internal var location: Int = -1
     private var name: String = _samplerName
     private var buffer: Buffer = _buffer
     private var width: Int = _width
@@ -52,8 +52,6 @@ class Texture(_program: Program, _samplerName: String,
     }
 
     override fun bind() {
-        GLES30.glActiveTexture(GLES30.GL_TEXTURE0)
-        // todo use textureSet for more textures
         GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, id)
         if(isBufferUpdated) {
             GLES30.glTexImage2D(GLES30.GL_TEXTURE_2D, 0,

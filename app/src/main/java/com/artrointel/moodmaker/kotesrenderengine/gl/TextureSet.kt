@@ -26,10 +26,10 @@ class TextureSet: IGLObject {
 
     override fun bind() {
         for(i in textures.indices) {
-            // if updated?
+            GLES30.glUniform1i(textures[0].location, i)
             GLES30.glActiveTexture(GLES30.GL_TEXTURE0 + i)
-            // todo use textureSet for more textures
-            GLES30.glBindTexture(GLES30.GL_TEXTURE_2D, textures[i].id)
+            textures[i].bind()
+            // todo if texture updated texImage2D
         }
     }
 

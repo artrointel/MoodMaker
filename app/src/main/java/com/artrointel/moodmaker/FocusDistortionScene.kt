@@ -4,6 +4,8 @@ import android.graphics.BitmapFactory
 import android.graphics.PointF
 import com.artrointel.moodmaker.kotesrenderengine.*
 import com.artrointel.moodmaker.kotesrenderengine.common.Vector3
+import com.artrointel.moodmaker.kotesrenderengine.renderers.RendererBase
+import com.artrointel.moodmaker.kotesrenderengine.renderers.WarpTransitionRenderer
 import java.nio.ByteBuffer
 
 class FocusDistortionScene {
@@ -79,5 +81,21 @@ class FocusDistortionScene {
         bmp.copyPixelsToBuffer(buffer)
         buffer.rewind()
         return ImageNode(buffer, bmp.width, bmp.height)
+    }
+
+    private fun createWarpRenderer(resourceIdBackground: Int, resourceIdAod: Int): WarpTransitionRenderer {
+        var bmp = BitmapFactory.decodeResource(world.context.resources, resourceIdBackground)
+
+        return WarpTransitionRenderer(
+            createBuffer(resourceIdBackground),
+            createBuffer(resourceIdAod), bmp.width, bmp.height)
+    }
+
+    private fun createBuffer(resourceId: Int): ByteBuffer {
+        var bmp = BitmapFactory.decodeResource(world.context.resources, resourceId)
+        var buffer = ByteBuffer.allocate(bmp.byteCount)
+        bmp.copyPixelsToBuffer(buffer)
+        buffer.rewind()
+        return buffer
     }
 }
