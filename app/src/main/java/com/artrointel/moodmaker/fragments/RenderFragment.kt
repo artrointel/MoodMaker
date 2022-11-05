@@ -8,14 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.artrointel.moodmaker.FocusDistortionScene
 import com.artrointel.moodmaker.glsurfaceview.*
 import com.artrointel.moodmaker.kotesrenderengine.RenderWorldBase
-import kotlin.math.sqrt
+import com.artrointel.moodmaker.kotesrenderengine.Scene
+import com.artrointel.moodmaker.scene.*
 
 class RenderFragment : Fragment() {
     private lateinit var kotEsSurfaceView: KotEsSurfaceView
     private lateinit var world: RenderWorldBase
+    private lateinit var scene: Scene
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,23 +37,14 @@ class RenderFragment : Fragment() {
         kotEsSurfaceView.setRenderer(KotEsSurfaceViewRenderer(world))
         // todo
         // kotEsSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
-
-        FocusDistortionScene.getInstance()!!.world = world
-        FocusDistortionScene.getInstance()!!.initWorld()
+        //FocusDistortionTransition(world)
+        scene = WarpTransition(world)
+        scene.initialize()
         return kotEsSurfaceView
     }
 
     fun setProgress(progress: Float) {
-        val sqrtProgress = sqrt(progress.toDouble()).toFloat()
-        val squareProgress = progress * progress
-
-        FocusDistortionScene.getInstance()!!.setMaskImageAlpha(sqrtProgress)
-        FocusDistortionScene.getInstance()!!.setMaskImageScale(
-            5.0f - 4.0f * sqrtProgress,
-            5.0f - 4.0f * sqrtProgress)
-
-        FocusDistortionScene.getInstance()!!.setRadius(squareProgress * 4.0f + 1.0f)
-        FocusDistortionScene.getInstance()!!.setDepth(squareProgress * 6.0f)
+        scene.setTime(progress)
     }
 
 }

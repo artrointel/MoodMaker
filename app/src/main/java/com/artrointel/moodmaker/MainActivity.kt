@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                         ValueAnimator.ofFloat(1.0f, 0.0f)
                     }
                     valueAnimator.apply {
-                        duration = 600
+                        duration = 1000
                         addUpdateListener {
                             currentValue = it.animatedValue as Float
                             renderFragment.setProgress(currentValue)
