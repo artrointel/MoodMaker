@@ -37,9 +37,10 @@ class RenderFragment : Fragment() {
         kotEsSurfaceView.setRenderer(KotEsSurfaceViewRenderer(world))
         // todo
         // kotEsSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
-        //scene = FocusDistortionTransition(world)
+        scene = FocusDistortionTransition(world)
         //scene = WarpTransition(world)
-        scene = PixelateTransition(world)
+        //scene = PixelateTransition(world)
+        //scene = RippleTransition(world)
         scene.initialize()
         return kotEsSurfaceView
     }

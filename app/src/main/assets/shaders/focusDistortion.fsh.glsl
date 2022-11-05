@@ -27,7 +27,21 @@ void main() {
     float f = ax + dx;
     if (ax > radius) f = ax;
 
-    vec2 magnifierArea = center + (uv - center) * f / ax;
+    uv = center + (uv - center) * f / ax;
+    uv = vec2(1, -1) * uv;
 
-    FragColor = texture(tex, vec2(1, -1) * magnifierArea);
+    // do simple blur
+    float normRadius = (uRadius - 1.0) * 0.25; // map uRadius[1,5] to [0,1]
+    float lod = sqrt(normRadius) * 8.0 + 1.0; // map to [1,8] with sqrt interpolation
+    float dUv = lod - 1.0;
+    dUv *= 0.001;
+
+    vec4 color = textureLod(tex, uv, lod);
+    color += textureLod(tex, uv + dUv * vec2(1.0, 1.0), lod);
+    color += textureLod(tex, uv + dUv * vec2(1.0, -1.0), lod);
+    color += textureLod(tex, uv + dUv * vec2(-1.0, 1.0), lod);
+    color += textureLod(tex, uv + dUv * vec2(-1.0, -1.0), lod);
+    color *= 0.2;
+
+    FragColor = color;
 }

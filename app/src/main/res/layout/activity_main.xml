@@ -11,9 +11,11 @@
         android:layout_height="match_parent"
         android:name="com.artrointel.moodmaker.fragments.RenderFragment"
         android:id="@+id/render_fragment"/>
+
     <Button
+        android:id="@+id/toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Toggle"
-        android:id="@+id/toggle"/>
+        android:layout_gravity="center|bottom" />
 </FrameLayout>

@@ -7,7 +7,7 @@ import java.nio.IntBuffer
 
 class Texture(_program: Program, _samplerName: String,
               _buffer: Buffer, _width: Int, _height: Int,
-              useMipmap: Boolean = false) : IGLObject {
+              var useMipmap: Boolean = false) : IGLObject {
     private var program: Program = _program
     internal var id: Int = -1
         private set
@@ -48,7 +48,12 @@ class Texture(_program: Program, _samplerName: String,
         GLES30.glTexImage2D(GLES30.GL_TEXTURE_2D, 0,
             GLES30.GL_RGBA, width, height, 0, GLES30.GL_RGBA, GLES30.GL_UNSIGNED_BYTE, buffer)
         GLES.glCheckError()
-        // mipmap if necessary
+
+        if (useMipmap) {
+            GLES30.glTexParameteri(GLES30.GL_TEXTURE_2D, GLES30.GL_TEXTURE_MIN_FILTER, GLES30.GL_LINEAR_MIPMAP_LINEAR);
+            GLES30.glGenerateMipmap(GLES30.GL_TEXTURE_2D)
+            GLES.glCheckError()
+        }
     }
 
     override fun bind() {
