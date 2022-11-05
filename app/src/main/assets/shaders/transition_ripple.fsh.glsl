@@ -2,6 +2,7 @@
 precision highp float;
 
 uniform sampler2D tex;
+uniform sampler2D tex2;
 
 uniform float uAlpha;
 uniform float uProgress;
@@ -46,5 +47,5 @@ void main() {
 
     vec4 color = texture(tex, tc);
     color.a = color.a * uAlpha;
-    FragColor = mix(generic_desaturate(color.xyz, 1.0), color, frac);
+    FragColor = mix(texture(tex2, tc), color, frac);
 }

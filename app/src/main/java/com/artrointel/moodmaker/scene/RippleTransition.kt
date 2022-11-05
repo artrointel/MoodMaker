@@ -18,8 +18,9 @@ class RippleTransition (world: RenderWorldBase) : DemoTransition(world) {
         node.transform.position = Vector3(displayWidth*0.5f, displayHeight*0.5f, 0.0f)
         node.transform.scale = Vector3(displayWidth, displayHeight, 0.0f)
 
-        val imageInfo = ImageLoader.createImage(world.context, R.drawable.background_image)
-        renderer = RippleTextureRenderer(imageInfo.buffer, imageInfo.width, imageInfo.height)
+        val imageInfo = ImageLoader.createImage(world.context, R.drawable.simple_pikachu_background)
+        val imageInfo2 = ImageLoader.createImage(world.context, R.drawable.simple_bulba_background)
+        renderer = RippleTextureRenderer(imageInfo.buffer, imageInfo2.buffer, imageInfo.width, imageInfo.height)
         renderer.setResolution(world.getDisplaySize().x, world.getDisplaySize().y)
         node.add(renderer)
         world.getRoot().appendChild(node)

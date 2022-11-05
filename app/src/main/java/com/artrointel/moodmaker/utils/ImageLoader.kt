@@ -18,6 +18,7 @@ class ImageLoader {
             var buffer = ByteBuffer.allocate(bmp.byteCount)
             bmp.copyPixelsToBuffer(buffer)
             buffer.rewind()
+
             return BitmapInfo(resourceId, bmp.width, bmp.height, buffer)
         }
     }

@@ -17,7 +17,7 @@ class KotEsSurfaceViewRenderer(world: RenderWorldBase) : GLSurfaceView.Renderer 
     }
 
     override fun onDrawFrame(gl: GL10?) {
-        Log.d(tag, "onDrawFrame")
+        // Log.d(tag, "onDrawFrame")
         world.render()
     }
 

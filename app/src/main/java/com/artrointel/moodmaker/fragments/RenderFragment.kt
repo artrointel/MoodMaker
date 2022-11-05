@@ -16,7 +16,7 @@ import com.artrointel.moodmaker.scene.*
 class RenderFragment : Fragment() {
     private lateinit var kotEsSurfaceView: KotEsSurfaceView
     private lateinit var world: RenderWorldBase
-    private lateinit var scene: Scene
+    private var scene: Scene? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,17 +36,24 @@ class RenderFragment : Fragment() {
         world = RenderWorldImpl(requireContext(), kotEsSurfaceView)
         kotEsSurfaceView.setRenderer(KotEsSurfaceViewRenderer(world))
         // todo
-        // kotEsSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
-        scene = FocusDistortionTransition(world)
-        //scene = WarpTransition(world)
-        //scene = PixelateTransition(world)
-        //scene = RippleTransition(world)
-        scene.initialize()
+        // kotEsSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRT
+
         return kotEsSurfaceView
     }
 
+    fun setTransitionScene(index: Int) {
+        when (index) {
+            0 -> scene = FocusDistortionTransition(world)
+            1 -> scene = WarpTransition(world)
+            2 -> scene = PixelateTransition(world)
+            3 -> scene = RippleTransition(world)
+        }
+        scene!!.initialize()
+    }
+
+
     fun setProgress(progress: Float) {
-        scene.setTime(progress)
+        scene?.setTime(progress)
     }
 
 }

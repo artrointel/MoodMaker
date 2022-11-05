@@ -8,9 +8,10 @@ import com.artrointel.moodmaker.kotesrenderengine.gl.utils.DataType
 import com.artrointel.moodmaker.kotesrenderengine.utils.Assets
 import java.nio.Buffer
 
-class RippleTextureRenderer(bufferFromImage: Buffer, width: Int, height: Int)
+class RippleTextureRenderer(bufferFromImage: Buffer, bufferFromImage2: Buffer, width: Int, height: Int)
     : RendererBase(), IRendererProjectionListener, IRendererTransformListener {
     private var buffer: Buffer = bufferFromImage
+    private var buffer2: Buffer = bufferFromImage2
     private var width: Int = width
     private var height: Int = height
 
@@ -60,7 +61,9 @@ class RippleTextureRenderer(bufferFromImage: Buffer, width: Int, height: Int)
         uProjMatrix = Uniform(program, DataType.MAT4,"projMatrix").set(Matrix4.IDENTITY.raw())
         uModelMatrix = Uniform(program, DataType.MAT4, "modelMatrix").set(Matrix4.IDENTITY.raw())
         val uTexture = Texture(program, "tex", buffer, width, height)
+        val uTexture2 = Texture(program, "tex2", buffer2, width, height)
         textureSet.add(uTexture)
+        textureSet.add(uTexture2)
 
         uResolution = Uniform(program, DataType.VEC2, "uResolution", 1).set(
             floatArrayOf(1.0f, 1.0f))
