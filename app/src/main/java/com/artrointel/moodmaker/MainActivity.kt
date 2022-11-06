@@ -18,7 +18,7 @@ import com.artrointel.moodmaker.fragments.RenderFragment
  * status bar and navigation/system bar) with user interaction.
  */
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    lateinit var valueAnimator: ValueAnimator
+    var valueAnimator: ValueAnimator? = null
     var toggle = false
     var currentValue: Float = 0.0f
     lateinit var renderFragment: RenderFragment
@@ -33,20 +33,22 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         button.setOnTouchListener { _: View, event: MotionEvent ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
+                    valueAnimator?.cancel()
                     valueAnimator = if (toggle) {
                         ValueAnimator.ofFloat(0.0f, 1.0f)
                     } else {
                         ValueAnimator.ofFloat(1.0f, 0.0f)
                     }
                     toggle = !toggle
-                    valueAnimator.apply {
+                    valueAnimator!!.apply {
                         duration = 2000
                         addUpdateListener {
                             currentValue = it.animatedValue as Float
                             renderFragment.setProgress(currentValue)
+                            renderFragment.invalidate()
                         }
                     }
-                    valueAnimator.start()
+                    valueAnimator!!.start()
                 }
             }
             true
@@ -67,6 +69,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         renderFragment.setTransitionScene(parent!!.selectedItemPosition)
         renderFragment.setProgress(0.0f)
+        renderFragment.invalidate()
         toggle = true
     }
 

@@ -66,7 +66,7 @@ class RippleTextureRenderer(bufferFromImage: Buffer, bufferFromImage2: Buffer, w
         textureSet.add(uTexture2)
 
         uResolution = Uniform(program, DataType.VEC2, "uResolution", 1).set(
-            floatArrayOf(1.0f, 1.0f))
+            floatArrayOf(displayWidth.toFloat(), displayHeight.toFloat()))
         uAlpha = Uniform(program, DataType.FLOAT, "uAlpha", 1).set(1.0f)
         uProgress = Uniform(program, DataType.FLOAT, "uProgress", 1).set(1.0f)
         aPos = Attribute(program, DataType.VEC3, "aPos").set(Mesh.QUAD_3D.data)
@@ -86,7 +86,6 @@ class RippleTextureRenderer(bufferFromImage: Buffer, bufferFromImage2: Buffer, w
     override fun onGLObjectUpdated() {
         uAlpha.set(alpha)
         uProgress.set(progress)
-        uResolution.set(floatArrayOf(displayWidth.toFloat(), displayHeight.toFloat()))
     }
 
     override fun onDispose() {}

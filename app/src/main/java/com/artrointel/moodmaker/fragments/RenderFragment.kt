@@ -3,6 +3,7 @@ package com.artrointel.moodmaker.fragments
 import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.ConfigurationInfo
+import android.opengl.GLSurfaceView
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,8 +36,7 @@ class RenderFragment : Fragment() {
 
         world = RenderWorldImpl(requireContext(), kotEsSurfaceView)
         kotEsSurfaceView.setRenderer(KotEsSurfaceViewRenderer(world))
-        // todo
-        // kotEsSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRT
+        kotEsSurfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
 
         return kotEsSurfaceView
     }
@@ -51,6 +51,9 @@ class RenderFragment : Fragment() {
         scene!!.initialize()
     }
 
+    fun invalidate() {
+        kotEsSurfaceView.requestRender()
+    }
 
     fun setProgress(progress: Float) {
         scene?.setTime(progress)

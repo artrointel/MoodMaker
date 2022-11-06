@@ -1,5 +1,6 @@
 package com.artrointel.moodmaker.kotesrenderengine
 
+import android.util.Log
 import com.artrointel.moodmaker.kotesrenderengine.common.Matrix4
 import com.artrointel.moodmaker.kotesrenderengine.common.Transform
 import com.artrointel.moodmaker.kotesrenderengine.renderers.IRendererProjectionListener
@@ -37,8 +38,13 @@ open class Node3D {
 
     // render dfs
     internal open fun render() {
-        for(child in children) {
-            child.render()
+        val iterator = children.iterator()
+        try {
+            while(iterator.hasNext()) {
+                iterator.next().render()
+            }
+        } catch (e: ConcurrentModificationException) {
+            Log.w("KWH", "GL Thread skipped rendering due to node update by the other thread")
         }
 
         for(renderer in renderers) {

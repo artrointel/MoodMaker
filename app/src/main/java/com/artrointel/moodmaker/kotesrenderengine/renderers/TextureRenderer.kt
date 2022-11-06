@@ -19,7 +19,7 @@ class TextureRenderer(bufferFromImage: Buffer, width: Int, height: Int)
     // Uniforms
     private lateinit var uProjMatrix: Uniform
     private lateinit var uModelMatrix: Uniform
-    private var uTexture: Texture? = null
+    private var textureSet: TextureSet = TextureSet()
 
     // Attributes
     private var attrSet: AttributeSet = AttributeSet()
@@ -29,13 +29,6 @@ class TextureRenderer(bufferFromImage: Buffer, width: Int, height: Int)
 
     // Data
     private var alpha: Float = 1.0f
-
-    fun set(bufferFromImage: Buffer, _width: Int, _height: Int) {
-        buffer = bufferFromImage
-        width = _width
-        height = _height
-        uTexture?.set(buffer, width, height)
-    }
 
     fun setAlpha(alpha: Float) {
         this.alpha = alpha
@@ -52,7 +45,8 @@ class TextureRenderer(bufferFromImage: Buffer, width: Int, height: Int)
 
         uProjMatrix = Uniform(program, DataType.MAT4,"projMatrix").set(Matrix4.IDENTITY.raw())
         uModelMatrix = Uniform(program, DataType.MAT4, "modelMatrix").set(Matrix4.IDENTITY.raw())
-        uTexture = Texture(program, "tex", buffer, width, height)
+        val uTexture = Texture(program, "tex", buffer, width, height)
+        textureSet.add(uTexture!!)
 
         uAlpha = Uniform(program, DataType.FLOAT, "uAlpha", 1).set(1.0f)
         aPos = Attribute(program, DataType.VEC3, "aPos").set(Mesh.QUAD_3D.data)
@@ -60,7 +54,7 @@ class TextureRenderer(bufferFromImage: Buffer, width: Int, height: Int)
 
         attrSet.set(aPos, aUv)
 
-        return arrayOf(program, uProjMatrix, uModelMatrix, uTexture!!, uAlpha, attrSet)
+        return arrayOf(program, uProjMatrix, uModelMatrix, textureSet, uAlpha, attrSet)
     }
 
     override fun onPrepare() {}

@@ -7,10 +7,10 @@ import java.nio.ByteBuffer
 class ImageLoader {
     companion object {
         class BitmapInfo(
-            var resourceId: Int,
-            var width: Int,
-            var height: Int,
-            var buffer: ByteBuffer) {
+            val resourceId: Int,
+            val width: Int,
+            val height: Int,
+            val buffer: ByteBuffer) {
         }
 
         fun createImage(context: Context, resourceId: Int): BitmapInfo {

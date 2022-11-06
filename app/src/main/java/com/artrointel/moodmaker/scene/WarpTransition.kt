@@ -18,8 +18,9 @@ class WarpTransition (world: RenderWorldBase) : DemoTransition(world) {
         node.transform.scale = Vector3(displayWidth, displayHeight, 0.0f)
 
 
-        val imageInfo = ImageLoader.createImage(world.context, R.drawable.background_image)
-        renderer = WarpTransitionRenderer(imageInfo.buffer, imageInfo.width, imageInfo.height)
+        val imageInfo = ImageLoader.createImage(world.context, R.drawable.pixel_background)
+        val imageInfo2 = ImageLoader.createImage(world.context, R.drawable.background_image)
+        renderer = WarpTransitionRenderer(imageInfo.buffer, imageInfo2.buffer, imageInfo.width, imageInfo.height)
 
         node.add(renderer)
         world.getRoot().appendChild(node)
