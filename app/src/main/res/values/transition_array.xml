@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="transition_array">
+        <item>CRT</item>
+        <item>Sphere</item>
         <item>Distort</item>
         <item>Warp</item>
         <item>Pixelate</item>

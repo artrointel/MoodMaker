@@ -9,8 +9,8 @@ import com.artrointel.moodmaker.utils.ImageLoader
 import kotlin.math.sqrt
 
 abstract class DemoTransition(world: RenderWorldBase) : Scene(world)  {
-    private var maskNode: ImageNode = createImageNode(R.drawable.circle_masking)
-    private var aodNode: ImageNode = createImageNode(R.drawable.aod_image)
+    protected var maskNode: ImageNode = createImageNode(R.drawable.circle_masking)
+    protected var aodNode: ImageNode = createImageNode(R.drawable.aod_image)
 
     private val displayCenter = Vector3(world.getDisplaySize().x * 0.5f, world.getDisplaySize().y * 0.5f, 0.0f)
 
@@ -37,9 +37,12 @@ abstract class DemoTransition(world: RenderWorldBase) : Scene(world)  {
         aodNode.transform.position = displayCenter
         aodNode.transform.scale = Vector3(world.getDisplaySize().x.toFloat(), world.getDisplaySize().y.toFloat(), 0.0f)
         world.getRoot().appendChild(aodNode)
+        onInitializeFinished()
     }
 
     abstract fun onInitialize()
+
+    open fun onInitializeFinished() {}
 
     override fun setTime(time: Float) {
         val sqrtProgress = sqrt(time.toDouble()).toFloat()

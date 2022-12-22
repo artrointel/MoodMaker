@@ -43,10 +43,12 @@ class RenderFragment : Fragment() {
 
     fun setTransitionScene(index: Int) {
         when (index) {
-            0 -> scene = FocusDistortionTransition(world)
-            1 -> scene = WarpTransition(world)
-            2 -> scene = PixelateTransition(world)
-            3 -> scene = RippleTransition(world)
+            0 -> scene = CRTTransition(world)
+            1 -> scene = SphereUnwrapTransition(world)
+            2 -> scene = FocusDistortionTransition(world)
+            3 -> scene = WarpTransition(world)
+            4 -> scene = PixelateTransition(world)
+            5 -> scene = RippleTransition(world)
         }
         scene!!.initialize()
     }
